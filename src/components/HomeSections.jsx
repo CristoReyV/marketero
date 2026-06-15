@@ -67,6 +67,22 @@ export function Hero() {
       }} />
 
       <div className="container" style={{ position: 'relative', zIndex: 1, padding: '6rem 1.5rem' }}>
+        {/* Logo */}
+        <div className="reveal" style={{ marginBottom: '2.5rem' }}>
+          <img
+            src="/logo-marketero.png"
+            alt="Marketero Logo"
+            style={{
+              height: '90px',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 0 28px rgba(10,107,255,0.55)) drop-shadow(0 0 8px rgba(0,212,255,0.3))',
+              animation: 'float 4s ease-in-out infinite',
+              display: 'block'
+            }}
+          />
+        </div>
+
         {/* Badge */}
         <div className="reveal" style={{ marginBottom: '1.5rem' }}>
           <span className="badge-cotizable" style={{ padding: '0.4rem 1rem', fontSize: '0.75rem' }}>

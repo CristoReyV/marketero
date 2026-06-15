@@ -21,21 +21,7 @@ export default function Header() {
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <nav className="nav container">
           <Link to="/" className="nav-logo" onClick={closeMenu}>
-            <div className="logo-mark">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-                <rect x="1" y="1" width="34" height="34" rx="8" stroke="url(#hLogoG)" strokeWidth="1.5"/>
-                <path d="M8 12L18 8L28 12L28 24L18 28L8 24Z" stroke="url(#hLogoG)" strokeWidth="1.5" fill="none"/>
-                <path d="M8 12L18 16L28 12" stroke="url(#hLogoG)" strokeWidth="1.5" fill="none"/>
-                <path d="M18 16L18 28" stroke="url(#hLogoG)" strokeWidth="1.5" fill="none"/>
-                <defs>
-                  <linearGradient id="hLogoG" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#0A6BFF"/>
-                    <stop offset="1" stopColor="#00D4FF"/>
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-            <span className="logo-text">MARKETERO</span>
+            <img src="/logo-marketero.png" alt="Marketero Logo" style={{ height: '36px', width: 'auto' }} />
           </Link>
 
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>
