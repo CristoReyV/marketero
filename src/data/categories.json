@@ -1,0 +1,14 @@
+[
+  { "id": "material-medico", "name": "Material Médico", "icon": "🩺", "count": 3 },
+  { "id": "equipo-medico", "name": "Equipo Médico", "icon": "🏥", "count": 1 },
+  { "id": "reactivos-laboratorio", "name": "Reactivos y Laboratorio", "icon": "🧪", "count": 2 },
+  { "id": "material-curacion", "name": "Material de Curación", "icon": "🩹", "count": 2 },
+  { "id": "papeleria-oficina", "name": "Papelería y Oficina", "icon": "📋", "count": 2 },
+  { "id": "limpieza-higiene", "name": "Limpieza e Higiene", "icon": "🧴", "count": 3 },
+  { "id": "ferreteria", "name": "Ferretería", "icon": "🔧", "count": 1 },
+  { "id": "material-construccion", "name": "Material de Construcción", "icon": "🏗️", "count": 1 },
+  { "id": "refrigeracion", "name": "Refrigeración", "icon": "❄️", "count": 2 },
+  { "id": "equipamiento-industrial", "name": "Equipamiento Industrial", "icon": "⚙️", "count": 1 },
+  { "id": "alimentos-bebidas", "name": "Alimentos y Bebidas", "icon": "🍽️", "count": 2 },
+  { "id": "consumibles-empresariales", "name": "Consumibles Empresariales", "icon": "📦", "count": 1 }
+]

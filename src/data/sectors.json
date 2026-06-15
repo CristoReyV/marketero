@@ -1,0 +1,10 @@
+[
+  { "id": "salud", "name": "Salud y Laboratorio", "icon": "🏥", "desc": "Hospitales, clínicas, farmacias y centros de investigación médica." },
+  { "id": "construccion", "name": "Construcción", "icon": "🏗️", "desc": "Constructoras, desarrolladoras y empresas de infraestructura." },
+  { "id": "industria", "name": "Industria", "icon": "🏭", "desc": "Manufactura, producción, plantas procesadoras y maquiladoras." },
+  { "id": "oficinas", "name": "Oficinas", "icon": "🏢", "desc": "Corporativos, despachos, firmas y empresas de servicios." },
+  { "id": "limpieza", "name": "Limpieza e Higiene", "icon": "✨", "desc": "Servicios de limpieza industrial, comercial e institucional." },
+  { "id": "laboratorio", "name": "Laboratorio", "icon": "🧪", "desc": "Laboratorios clínicos, de investigación y control de calidad." },
+  { "id": "refrigeracion", "name": "Refrigeración", "icon": "❄️", "desc": "Empresas de alimentos, farmacéuticas y centros de distribución en frío." },
+  { "id": "alimentos", "name": "Alimentos y Bebidas", "icon": "🍽️", "desc": "Restaurantes, procesadoras y distribuidoras del sector alimentario." }
+]
