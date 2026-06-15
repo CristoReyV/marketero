@@ -21,7 +21,7 @@ export default function Header() {
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
         <nav className="nav container">
           <Link to="/" className="nav-logo" onClick={closeMenu}>
-            <img src="/logo-marketero.png" alt="Marketero Logo" style={{ height: '36px', width: 'auto' }} />
+            <img src="/logo-fondo-negro.png" alt="Marketero Logo" style={{ height: '36px', width: 'auto' }} />
           </Link>
 
           <ul className={`nav-links ${menuOpen ? 'open' : ''}`}>

@@ -70,7 +70,7 @@ export function Hero() {
         {/* Logo */}
         <div className="reveal" style={{ marginBottom: '2.5rem' }}>
           <img
-            src="/logo-marketero.png"
+            src="/logo-fondo-negro.png"
             alt="Marketero Logo"
             style={{
               height: '90px',
