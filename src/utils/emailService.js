@@ -16,11 +16,11 @@
 // │  CONFIGURACIÓN — EDITAR ANTES DE PRODUCCIÓN                     │
 // └─────────────────────────────────────────────────────────────────┘
 const EMAILJS_CONFIG = {
-  SERVICE_ID:          'YOUR_SERVICE_ID',          // Ej: "service_abc123"
-  TEMPLATE_QUOTE_ID:   'YOUR_QUOTE_TEMPLATE_ID',   // Template para cotizaciones
+  SERVICE_ID:          'service_60dbjcs',          // Ej: "service_abc123"
+  TEMPLATE_QUOTE_ID:   'template_ddst5ub',   // Template para cotizaciones
   TEMPLATE_CONTACT_ID: 'YOUR_CONTACT_TEMPLATE_ID', // Template para contacto
-  PUBLIC_KEY:          'YOUR_PUBLIC_KEY',           // Tu Public Key de EmailJS
-  RECIPIENT_EMAIL:     'contacto@marketero.com',    // Correo que recibe las solicitudes
+  PUBLIC_KEY:          'JofZeUiAhHe9RxyvB',           // Tu Public Key de EmailJS
+  RECIPIENT_EMAIL:     'ventas@marketero.com.mx',    // Correo que recibe las solicitudes
 };
 
 const EMAILJS_API = 'https://api.emailjs.com/api/v1.0/email/send';
@@ -68,17 +68,10 @@ export async function sendQuoteRequest({ formData, quoteItems }) {
   const templateParams = {
     to_email:       EMAILJS_CONFIG.RECIPIENT_EMAIL,
     from_name:      formData.nombre,
-    from_company:   formData.empresa,
-    from_email:     formData.correo,
-    from_phone:     formData.telefono,
-    from_city:      formData.ciudad,
-    from_giro:      formData.giro,
-    message:        formData.mensaje || 'Sin comentarios adicionales.',
-    products_list:  productsText,
-    total_products: quoteItems.length,
-    date: new Date().toLocaleDateString('es-MX', {
-      year: 'numeric', month: 'long', day: 'numeric',
-    }),
+    company:        formData.empresa,
+    reply_to:       formData.correo,
+    phone:          formData.telefono,
+    message:        `📦 PRODUCTOS SOLICITADOS (${quoteItems.length}):\n${productsText}\n\n📝 COMENTARIOS:\n${formData.mensaje || 'Sin comentarios adicionales.'}\n\n📍 UBICACIÓN: ${formData.municipio ? `${formData.municipio}, ` : ''}${formData.estado || formData.ciudad || 'No especificada'}\n🏢 GIRO: ${formData.giro || 'No especificado'}\n🕐 ENVIADO: ${formData.timestamp || new Date().toISOString()}`,
   };
 
   if (!isConfigured()) {
@@ -96,17 +89,12 @@ export async function sendQuoteRequest({ formData, quoteItems }) {
 // ═══════════════════════════════════════════════════════════════════
 export async function sendContactRequest(formData) {
   const templateParams = {
-    to_email:          EMAILJS_CONFIG.RECIPIENT_EMAIL,
-    from_company:      formData.empresa,
-    from_name:         formData.nombre,
-    from_email:        formData.correo,
-    from_phone:        formData.telefono,
-    product_needed:    formData.producto,
-    quantity_estimate: formData.cantidad,
-    message:           formData.comentarios || 'Sin comentarios.',
-    date: new Date().toLocaleDateString('es-MX', {
-      year: 'numeric', month: 'long', day: 'numeric',
-    }),
+    to_email:       EMAILJS_CONFIG.RECIPIENT_EMAIL,
+    company:        formData.empresa,
+    from_name:      formData.nombre,
+    reply_to:       formData.correo,
+    phone:          formData.telefono,
+    message:        `PRODUCTO BUSCADO: ${formData.producto}\nCANTIDAD ESTIMADA: ${formData.cantidad}\n\n📝 MENSAJE:\n${formData.comentarios || 'Sin comentarios adicionales.'}`,
   };
 
   if (!isConfigured()) {

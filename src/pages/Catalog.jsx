@@ -12,6 +12,13 @@ export default function Catalog() {
   const [activeSector, setActiveSector] = useState(searchParams.get('sector') || '');
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Close sidebar on ESC
+  useEffect(() => {
+    const handler = (e) => { if (e.key === 'Escape') setSidebarOpen(false); };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -89,16 +96,16 @@ export default function Catalog() {
       </div>
 
       {/* Main Layout */}
-      <div className="container" style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '2rem', padding: '2rem 1.5rem', alignItems: 'start' }}>
+      <div className="container catalog-layout">
+        {/* Mobile filter toggle */}
+        <button className="catalog-filter-toggle" onClick={() => setSidebarOpen(p => !p)} aria-label="Abrir filtros">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+          {sidebarOpen ? 'Cerrar filtros' : 'Filtros'}
+          {hasFilters && <span style={{ background: 'var(--grad-brand)', color: '#fff', borderRadius: '100px', padding: '1px 7px', fontSize: '0.7rem', fontWeight: 700, marginLeft: '0.25rem' }}>!</span>}
+        </button>
+
         {/* Sidebar */}
-        <aside style={{
-          background: 'var(--bg-secondary)',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--radius-md)',
-          padding: '1.5rem',
-          position: 'sticky',
-          top: '90px'
-        }}>
+        <aside className={`catalog-sidebar${sidebarOpen ? ' mobile-open' : ''}`}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: 700, color: 'var(--text-primary)' }}>Filtros</h3>
             {hasFilters && (
@@ -111,24 +118,51 @@ export default function Catalog() {
           {/* Sector filter */}
           <div style={{ marginBottom: '1.5rem' }}>
             <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Sector</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <FilterBtn label="Todos los sectores" active={!activeSector} onClick={() => setActiveSector('')} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', maxHeight: '250px', overflowY: 'auto', paddingRight: '4px' }} className="custom-scrollbar">
+              <FilterBtn 
+                label="Todos los sectores" 
+                active={!activeSector} 
+                onClick={() => { setActiveSector(''); setActiveCategory(''); }} 
+              />
               {sectors.map(s => (
-                <FilterBtn key={s.id} label={s.name} icon={s.icon} active={activeSector === s.id} onClick={() => setActiveSector(activeSector === s.id ? '' : s.id)} />
+                <FilterBtn 
+                  key={s.id} 
+                  label={s.name} 
+                  icon={s.icon} 
+                  active={activeSector === s.id} 
+                  onClick={() => { setActiveSector(activeSector === s.id ? '' : s.id); setActiveCategory(''); }} 
+                />
               ))}
             </div>
           </div>
 
           {/* Category filter */}
-          <div>
-            <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>Categoría</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
-              <FilterBtn label="Todas las categorías" active={!activeCategory} onClick={() => setActiveCategory('')} />
-              {categories.map(c => (
-                <FilterBtn key={c.id} label={c.name} icon={c.icon} active={activeCategory === c.id} onClick={() => setActiveCategory(activeCategory === c.id ? '' : c.id)} />
-              ))}
+          {activeSector && (
+            <div>
+              <p style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>
+                Categorías de {sectors.find(s => s.id === activeSector)?.name}
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', maxHeight: '250px', overflowY: 'auto', paddingRight: '4px' }} className="custom-scrollbar">
+                <FilterBtn label="Todas" active={!activeCategory} onClick={() => setActiveCategory('')} />
+                {categories.filter(c => 
+                  products.some(p => 
+                    p.categorySlug === c.id && 
+                    (activeSector === 'salud' ? (p.sectorSlug === 'salud' || p.sectorSlug === 'laboratorio') : p.sectorSlug === activeSector)
+                  )
+                ).map(c => (
+                  <FilterBtn key={c.id} label={c.name} icon={c.icon} active={activeCategory === c.id} onClick={() => setActiveCategory(activeCategory === c.id ? '' : c.id)} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          {/* Mobile close button */}
+          <button
+            onClick={() => setSidebarOpen(false)}
+            style={{ display: 'none', marginTop: '1.5rem', width: '100%', padding: '0.75rem', background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', color: 'var(--text-secondary)', fontSize: '0.875rem', cursor: 'pointer' }}
+            className="catalog-sidebar-close"
+          >
+            Cerrar filtros ×
+          </button>
         </aside>
 
         {/* Product Grid */}
@@ -170,12 +204,13 @@ export default function Catalog() {
         </div>
       </div>
 
-      {/* Mobile: responsive adjustments via inline media */}
-      <style>{`
-        @media (max-width: 768px) {
-          .catalog-layout { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      {/* Overlay for mobile sidebar */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 499, backdropFilter: 'blur(2px)' }}
+        />
+      )}
     </div>
   );
 }

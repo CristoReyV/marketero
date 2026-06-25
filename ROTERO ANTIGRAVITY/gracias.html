@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Gracias | ROTERO WLS</title>
+  <link rel="icon" type="image/png" href="assets/favicon-rotero.png">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    :root {
+      --bg-dark: #020617;
+      --bg-card: rgba(15, 23, 42, 0.92);
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --accent-yellow: #fbbf24;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-color: rgba(148, 163, 184, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, #0f766e 0, transparent 55%),
+        radial-gradient(circle at bottom right, #1d4ed8 0, transparent 55%),
+        var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .wrapper {
+      max-width: 960px;
+      width: 100%;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.15), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(15, 118, 110, 0.2), transparent 55%),
+                  var(--bg-card);
+      border: 1px solid var(--border-color);
+      box-shadow:
+        0 25px 50px -12px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.4);
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 32px;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        grid-template-columns: 1fr;
+        padding: 24px 18px;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+
+    h1 {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      line-height: 1.1;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    .subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .highlight {
+      color: var(--accent-yellow);
+      font-weight: 600;
+    }
+
+    .steps-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .steps {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-number {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .step-text {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .step-text span {
+      font-weight: 500;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid transparent;
+      transition: all 0.18s ease-out;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #0f172a;
+      box-shadow: 0 10px 25px -8px rgba(34, 197, 94, 0.7);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px -10px rgba(34, 197, 94, 0.9);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-main);
+      border-color: rgba(148, 163, 184, 0.6);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
+    }
+
+    .btn-icon {
+      font-size: 1.05rem;
+    }
+
+    /* Columna derecha: “tarjeta” visual */
+    .side {
+      position: relative;
+      border-radius: 20px;
+      padding: 18px 18px 20px;
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.16), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.18), transparent 55%),
+                  rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow:
+        0 20px 35px -20px rgba(15, 23, 42, 0.9),
+        0 0 0 1px rgba(15, 23, 42, 0.6);
+      overflow: hidden;
+    }
+
+    .side-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .logo-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(22, 163, 74, 0.12);
+      color: var(--accent);
+      font-size: 0.75rem;
+      border: 1px solid rgba(34, 197, 94, 0.5);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.25);
+    }
+
+    .side-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .side-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .side-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .metric {
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .metric-tag {
+      font-size: 0.7rem;
+      color: var(--accent-yellow);
+    }
+
+    .timeline {
+      border-top: 1px dashed rgba(148, 163, 184, 0.5);
+      padding-top: 10px;
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timeline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .timeline-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .timeline-line {
+      width: 26px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, transparent);
+    }
+
+    .timeline-status {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .blur-circle {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(24px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .blur-1 {
+      width: 140px;
+      height: 140px;
+      background: rgba(56, 189, 248, 0.4);
+      top: -50px;
+      right: -40px;
+    }
+
+    .blur-2 {
+      width: 110px;
+      height: 110px;
+      background: rgba(34, 197, 94, 0.4);
+      bottom: -40px;
+      left: -30px;
+    }
+
+    .footer-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 18px;
+    }
+
+    .footer-note span {
+      color: var(--accent-yellow);
+      font-weight: 500;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="card">
+
+      <!-- Columna izquierda: mensaje principal -->
+      <div>
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Solicitud recibida
+        </div>
+
+        <h1>
+          <span class="check-icon">✔</span>
+          ¡Gracias por tu solicitud!
+        </h1>
+
+        <p class="subtitle">
+          Hemos recibido tu mensaje. Nuestro equipo de <span class="highlight">ROTERO WLS</span> revisará la información de tu proyecto y se pondrá en contacto contigo a la brevedad.
+        </p>
+
+        <p class="steps-title">¿Qué sigue?</p>
+        <ul class="steps">
+          <li class="step">
+            <div class="step-number">1</div>
+            <p class="step-text">
+              <span>Revisión técnica.</span> Validamos tu ruta, tipo de carga e información de isotanques / unidades necesarias.
+            </p>
+          </li>
+          <li class="step">
+            <div class="step-number">2</div>
+            <p class="step-text">
+              <span>Propuesta de solución.</span> Un ejecutivo de ROTERO WLS te contactará con una opción alineada a tu operación.
+            </p>
+          </li>
+          <li class="step">
+            <div class="step-number">3</div>
+            <p class="step-text">
+              <span>Cotización y seguimiento.</span> Acordamos tiempos, puertos, patios y servicio ideal para tu logística.
+            </p>
+          </li>
+        </ul>
+
+        <div class="buttons">
+          <a href="index.html" class="btn btn-primary">
+            <span class="btn-icon">⬅</span>
+            Volver al sitio
+          </a>
+          <a href="https://wa.me/525578165646?text=Hola%2C%20acabo%20de%20enviar%20el%20formulario%20en%20la%20web%20de%20ROTERO%20WLS%20y%20quiero%20una%20cotizaci%C3%B3n."
+             class="btn btn-ghost" target="_blank" rel="noopener">
+            <span class="btn-icon">💬</span>
+            Continuar por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna derecha: “tarjeta” visual tipo dashboard -->
+      <div class="side">
+        <div class="blur-circle blur-1"></div>
+        <div class="blur-circle blur-2"></div>
+
+        <div class="side-header">
+          <div class="logo-mark">
+            <div class="logo-circle">RW</div>
+            ROTERO WLS
+          </div>
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            En proceso de revisión
+          </div>
+        </div>
+
+        <div>
+          <p class="side-title">Solicitud de cotización registrada</p>
+          <p class="side-subtitle">
+            Tu información se ha enviado correctamente al equipo de logística. Este es el estatus general de tu solicitud:
+          </p>
+
+          <div class="side-metrics">
+            <div class="metric">
+              <p class="metric-label">Prioridad</p>
+              <p class="metric-value">Alta</p>
+              <p class="metric-tag">Industria química / HazMat</p>
+            </div>
+            <div class="metric">
+              <p class="metric-label">Siguiente paso</p>
+              <p class="metric-value">Contacto ejecutivo</p>
+              <p class="metric-tag">En menos de 24&nbsp;hrs hábiles</p>
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-row">
+              <div class="timeline-label">
+                <span class="timeline-line"></span>
+                <span>Recepción de datos</span>
+              </div>
+              <span class="timeline-status">Completado</span>
+            </div>
+            <div class="timeline-row">
+              <div class="timeline-label">
+                <span class="timeline-line" style="background:linear-gradient(to right,#fbbf24,transparent);"></span>
+                <span>Análisis de ruta y servicio</span>
+              </div>
+              <span>Pendiente</span>
+            </div>
+            <div class="timeline-row">
+              <div class="timeline-label">
+                <span class="timeline-line" style="background:linear-gradient(to right,#38bdf8,transparent);"></span>
+                <span>Envío de propuesta</span>
+              </div>
+              <span>Pendiente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="footer-note">
+      Gracias por confiar tu logística a <span>ROTERO WLS</span>.
+    </p>
+  </div>
+</body>
+</html>

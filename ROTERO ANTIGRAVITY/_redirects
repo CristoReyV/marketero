@@ -1,0 +1,3 @@
+# Rotero Ecommerce — Netlify Redirects
+/tienda               /tienda.html              200
+/tienda/producto/*     /tienda-producto.html?slug=:splat   200

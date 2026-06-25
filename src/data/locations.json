@@ -1,0 +1,59 @@
+{
+  "states": [
+    {
+      "id": "GRO",
+      "name": "Guerrero",
+      "municipalities": [
+        "Acapulco de Juárez",
+        "Chilpancingo de los Bravo",
+        "Iguala de la Independencia",
+        "Taxco de Alarcón",
+        "Zihuatanejo de Azueta"
+      ]
+    },
+    {
+      "id": "CDMX",
+      "name": "Ciudad de México",
+      "municipalities": [
+        "Álvaro Obregón",
+        "Benito Juárez",
+        "Coyoacán",
+        "Cuauhtémoc",
+        "Miguel Hidalgo"
+      ]
+    },
+    {
+      "id": "MEX",
+      "name": "Estado de México",
+      "municipalities": [
+        "Ecatepec de Morelos",
+        "Metepec",
+        "Naucalpan de Juárez",
+        "Tlalnepantla de Baz",
+        "Toluca"
+      ]
+    },
+    {
+      "id": "PUE",
+      "name": "Puebla",
+      "municipalities": [
+        "Atlixco",
+        "Puebla",
+        "San Andrés Cholula",
+        "San Pedro Cholula",
+        "Tehuacán"
+      ]
+    },
+    {
+      "id": "MOR",
+      "name": "Morelos",
+      "municipalities": [
+        "Cuautla",
+        "Cuernavaca",
+        "Jiutepec",
+        "Temixco",
+        "Yautepec"
+      ]
+    }
+  ]
+}

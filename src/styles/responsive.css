@@ -1,0 +1,233 @@
+/* ═══════════════════════════════════════════════════════════════════
+   MARKETERO — Responsive Mobile Styles
+   Breakpoints: 480px (xs), 640px (sm), 768px (md), 960px (lg), 1100px (xl)
+   Aplicado globalmente encima de index.css
+═══════════════════════════════════════════════════════════════════ */
+
+/* ── Catalog page ────────────────────────────────────────────────── */
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  padding: 2rem 1.5rem;
+  align-items: start;
+}
+
+/* Filtros móvil: overlay lateral */
+.catalog-sidebar {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  position: sticky;
+  top: 90px;
+}
+
+.catalog-filter-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 1.25rem;
+}
+.catalog-filter-toggle:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-cyan);
+}
+
+/* ── WhyMarketero ────────────────────────────────────────────────── */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  align-items: start;
+}
+.why-sticky {
+  position: sticky;
+  top: 100px;
+}
+
+/* ── Contact page ────────────────────────────────────────────────── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 4rem;
+  align-items: start;
+  padding: 3rem 1.5rem;
+}
+
+/* ── Quote page ──────────────────────────────────────────────────── */
+.quote-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 460px;
+  gap: 2.5rem;
+  align-items: start;
+}
+.quote-form-col {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  position: sticky;
+  top: 90px;
+}
+
+/* ── Hero stats ──────────────────────────────────────────────────── */
+.hero-stats {
+  display: flex;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Contact form internal grid ──────────────────────────────────── */
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   BREAKPOINT: < 1100px
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .quote-layout {
+    grid-template-columns: minmax(0, 1fr) 400px;
+  }
+  .why-grid {
+    gap: 3rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   BREAKPOINT: < 960px
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 960px) {
+  /* Catalog: ocultar sidebar, mostrar botón de filtros */
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+  .catalog-filter-toggle {
+    display: flex;
+  }
+  .catalog-sidebar {
+    display: none;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 500;
+    border-radius: 0;
+    overflow-y: auto;
+    border: none;
+    border-top: 1px solid var(--border);
+    animation: fadeIn 0.2s var(--ease);
+  }
+  .catalog-sidebar.mobile-open {
+    display: block;
+  }
+  .catalog-sidebar-close {
+    display: flex !important;
+  }
+
+  /* Quote layout */
+  .quote-layout {
+    grid-template-columns: 1fr;
+  }
+  .quote-form-col {
+    position: relative;
+    top: 0;
+  }
+
+  /* Why Marketero */
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .why-sticky {
+    position: relative;
+    top: 0;
+  }
+
+  /* Contact */
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   BREAKPOINT: < 640px
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Hero stats 2 columnas */
+  .hero-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  /* Contact form internal grids: 1 col */
+  .contact-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Quote page padding */
+  .quote-form-col {
+    padding: 1.25rem;
+  }
+
+  /* General containers */
+  .container {
+    padding: 0 1rem;
+  }
+
+  /* Buttons full-width on very small screens */
+  .btn-stack-mobile {
+    flex-direction: column;
+  }
+  .btn-stack-mobile .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* HowItWorks: ocultar línea conectora */
+  .how-connector {
+    display: none !important;
+  }
+
+  /* Toast notification */
+  .quote-drawer-toast {
+    right: 0.75rem;
+    left: 0.75rem;
+    max-width: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   BREAKPOINT: < 480px
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  :root {
+    --section-py: 4rem;
+  }
+  .hero-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .quote-form-col {
+    padding: 1rem;
+  }
+  .section-title {
+    font-size: 1.6rem !important;
+  }
+}

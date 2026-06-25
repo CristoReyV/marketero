@@ -1,0 +1,7 @@
+[
+  { "code": "MX", "name": "México", "dial": "+52", "maxDigits": 10, "minDigits": 10, "flag": "🇲🇽" },
+  { "code": "US", "name": "Estados Unidos", "dial": "+1", "maxDigits": 10, "minDigits": 10, "flag": "🇺🇸" },
+  { "code": "CA", "name": "Canadá", "dial": "+1", "maxDigits": 10, "minDigits": 10, "flag": "🇨🇦" },
+  { "code": "CO", "name": "Colombia", "dial": "+57", "maxDigits": 10, "minDigits": 7, "flag": "🇨🇴" },
+  { "code": "GT", "name": "Guatemala", "dial": "+502", "maxDigits": 8, "minDigits": 7, "flag": "🇬🇹" }
+]

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unidades | ROTERO</title>
+  <link rel="icon" type="image/png" href="assets/favicon-rotero.png">
+
+
+  <!-- Tailwind + Iconos -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Fuente -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  /* Usando main.css para estilos globales */
+</head>
+
+<body class="antialiased text-slate-300">
+
+  <!-- Fondo: mapa + velo oscuro + cuadrícula sutil -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-map"></div>
+    <div class="absolute inset-0 bg-slate-900/70"></div>
+    <div
+      class="absolute inset-0 opacity-[.18] [background:radial-gradient(1200px_600px_at_10%_10%,rgba(59,130,246,.20),transparent_60%)]">
+    </div>
+    <div
+      class="absolute inset-0 [background-image:linear-gradient(rgba(255,255,255,.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.04)_1px,transparent_1px)] bg-[length:40px_40px]">
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50">
+    <div class="glass-premium rounded-full px-6 py-3 flex items-center justify-between">
+      <a href="index.html" class="inline-flex items-center gap-2 font-semibold tracking-wide">
+        <img src="assets/ROTERO SVG.svg" alt="ROTERO" class="h-11 w-auto object-contain select-none" />
+      </a>
+
+      <!-- Menú desktop -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-200">
+        <a href="index.html" class="hover:text-white transition">Inicio</a>
+        <a href="servicios.html" class="hover:text-white transition">Servicios</a>
+        <a href="isotanques.html" class="hover:text-white transition">Isotanques</a>
+        <a href="unidades.html" class="text-white">Unidades</a>
+        <a href="nosotros.html" class="hover:text-white transition">Nosotros</a>
+        <a href="tienda.html" class="hover:text-white transition">Tienda</a>
+      </div>
+
+      <!-- CTA + botón móvil -->
+      <div class="flex items-center gap-3">
+        <a href="index.html#contacto" class="shiny-cta-premium inline-flex items-center gap-1">
+          <span>Cotizar</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </a>
+
+        <!-- Botón menú móvil -->
+        <button id="mobile-menu-toggle"
+          class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-white/30 text-neutral-100 hover:border-emerald-400 hover:text-emerald-300 transition"
+          aria-label="Abrir menú de navegación">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel menú móvil -->
+    <div id="mobile-menu" class="md:hidden mt-3 hidden">
+      <div class="glass rounded-3xl px-5 py-4 text-sm text-neutral-100">
+        <nav class="flex flex-col gap-1">
+          <a href="index.html" class="py-2 border-b border-white/10 hover:text-white transition">Inicio</a>
+          <a href="servicios.html" class="py-2 border-b border-white/10 hover:text-white transition">Servicios</a>
+          <a href="isotanques.html" class="py-2 border-b border-white/10 hover:text-white transition">Isotanques</a>
+          <a href="unidades.html" class="py-2 border-b border-white/10 text-white transition">Unidades</a>
+          <a href="nosotros.html" class="py-2 border-b border-white/10 hover:text-white transition">Nosotros</a>
+          <a href="tienda.html" class="py-2 border-b border-white/10 hover:text-white transition">Tienda</a>
+
+          <a href="index.html#contacto"
+            class="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-sky-500 text-white font-medium hover:bg-sky-400 transition">
+            Hablar con un asesor
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-40 pb-10">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white font-outfit">Nuestra Flota</h1>
+      <p class="mt-4 text-slate-200/90 max-w-3xl">
+        Unidades modernas con mantenimiento riguroso y configuraciones para cada necesidad:
+        urbano, regional, larga distancia e intermodal.
+      </p>
+    </div>
+  </header>
+
+  <!-- Flota agrupada por tipo de operación -->
+  <main class="pb-24">
+    <div class="max-w-7xl mx-auto px-6 space-y-10">
+
+      <!-- Distribución urbana y local -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Distribución urbana y local</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Nissan / Rabón -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/nissanbod.webp" alt="Nissan / Rabón">
+            </div>
+            <div class="flex items-center gap-3">
+              <i data-lucide="truck" class="w-5 h-5 text-cyan-300"></i>
+              <h3 class="text-white font-semibold">Nissan / Rabón</h3>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              1.5–8 ton · reparto urbano y rutas cortas con acceso a zonas restringidas.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-sky-300"></i>
+                Distribución local y última milla.</li>
+              <li class="flex items-center gap-2"><i data-lucide="package" class="w-4 h-4 text-indigo-300"></i>
+                Configuración caja seca o estacas (según operación).</li>
+              <li class="flex items-center gap-2"><i data-lucide="radar" class="w-4 h-4 text-emerald-300"></i> Rastreo
+                24/7 y cumplimiento NOM-012.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Operación regional -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Operación regional</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Torton -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/tortonbod.webp" alt="Torton">
+            </div>
+            <div class="flex items-center gap-3">
+              <i data-lucide="truck" class="w-5 h-5 text-cyan-300"></i>
+              <h3 class="text-white font-semibold">Torton</h3>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              15–18 ton · operación regional con alta disponibilidad.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2"><i data-lucide="ruler" class="w-4 h-4 text-sky-300"></i> Cajas típicas
+                de 30–36 ft.</li>
+              <li class="flex items-center gap-2"><i data-lucide="timer" class="w-4 h-4 text-indigo-300"></i> Eficiencia
+                en tiempos de carga/descarga.</li>
+              <li class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+                Operación segura y documentada.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Larga distancia y alta cubicación -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Larga distancia y alta cubicación</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Cajas 48/53 -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/camion53bod.webp" alt="Cajas 48 y 53 pies">
+            </div>
+            <div class="flex items-center gap-3">
+              <i data-lucide="box" class="w-5 h-5 text-cyan-300"></i>
+              <h3 class="text-white font-semibold">Cajas 48’ / 53’</h3>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              Larga distancia con alta cubicación para mercancía general.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2"><i data-lucide="scan" class="w-4 h-4 text-sky-300"></i> Sellos y
+                control de integridad.</li>
+              <li class="flex items-center gap-2"><i data-lucide="route" class="w-4 h-4 text-indigo-300"></i> Rutas
+                nacionales y cross-dock.</li>
+              <li class="flex items-center gap-2"><i data-lucide="badge-check" class="w-4 h-4 text-emerald-300"></i>
+                Cumplimiento NOM-012 y políticas de cliente.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Intermodal contenedor -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Intermodal contenedor</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Portacontenedor (Dry/reefers) -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/portabod.webp" alt="Portacontenedor">
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i data-lucide="ship" class="w-5 h-5 text-cyan-300"></i>
+                <h3 class="text-white font-semibold">Portacontenedor</h3>
+              </div>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              Intermodal 20’/40’ (dry/reefers) para importación y exportación.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2"><i data-lucide="dock" class="w-4 h-4 text-sky-300"></i> Maniobras en
+                puerto y patios.</li>
+              <li class="flex items-center gap-2"><i data-lucide="lock" class="w-4 h-4 text-indigo-300"></i> Chasis con
+                <em>twistlocks</em> certificados.</li>
+              <li class="flex items-center gap-2"><i data-lucide="file-check" class="w-4 h-4 text-emerald-300"></i>
+                Coordinación aduanal y cartas porte.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Proyectos sobredimensionados -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Proyectos sobredimensionados</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <!-- Lowboy -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/lowbod.webp" alt="Lowboy">
+            </div>
+            <div class="flex items-center gap-3">
+              <i data-lucide="construction" class="w-5 h-5 text-cyan-300"></i>
+              <h3 class="text-white font-semibold">Lowboy</h3>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              Sobredimensionado y alto tonelaje con cama baja.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2"><i data-lucide="weight" class="w-4 h-4 text-sky-300"></i> Capacidades
+                típicas 20–60 t.</li>
+              <li class="flex items-center gap-2"><i data-lucide="beacon" class="w-4 h-4 text-indigo-300"></i> Estudios
+                de ruta, permisos y escoltas.</li>
+              <li class="flex items-center gap-2"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-300"></i>
+                Normativa vigente y seguridad operativa.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <!-- Especialidades en líquidos a granel -->
+      <section>
+        <h2 class="text-xl md:text-2xl font-semibold text-white mb-4">Especialidades en líquidos a granel</h2>
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+          <!-- Cisterna Inox (resumen + enlace a isotanques) -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/cisterna.webp"
+                alt="Tractocamión con tanque cisterna inoxidable para líquidos a granel" />
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i data-lucide="flask-conical" class="w-5 h-5 text-cyan-300"></i>
+                <h3 class="text-white font-semibold">Cisterna Inox</h3>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/15 text-white border border-white/25">Especialidad</span>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              Tanque de acero inoxidable para traslado a granel de líquidos químicos o <em>food-grade</em>.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2">
+                <i data-lucide="gauge" class="w-4 h-4 text-sky-300"></i>
+                Capacidades típicas 30–35 mil L · productos compatibles según especificación.
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="map" class="w-4 h-4 text-indigo-300"></i>
+                Cobertura nacional y tramos puerto–planta–destino.
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-300"></i>
+                <a href="isotanques.html" class="text-emerald-300 hover:text-emerald-200">Ver operación en isotanques
+                  →</a>
+              </li>
+            </ul>
+          </article>
+
+          <!-- Porta-Isotanques (resumen + enlace a isotanques) -->
+          <article class="card glass-premium p-6 hover:translate-y-[-2px] transition">
+            <div class="media mb-4">
+              <img src="assets/flota/portaisotanque.webp"
+                alt="Tractocamión con chasis porta-isotanques 20/40 pies para líquidos a granel" />
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i data-lucide="container" class="w-5 h-5 text-sky-300"></i>
+                <h3 class="text-white font-semibold">Porta-Isotanques 20’ / 40’</h3>
+              </div>
+              <span
+                class="px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide uppercase bg-white/15 text-white border border-white/25">Especialidad</span>
+            </div>
+            <p class="text-sm text-slate-200/90 mt-2">
+              Chasis con <em>twistlocks</em> para isotanques de químicos, <em>food-grade</em> y HazMat.
+            </p>
+            <ul class="mt-3 text-xs text-slate-300/90 grid grid-cols-1 gap-1">
+              <li class="flex items-center gap-2">
+                <i data-lucide="scan" class="w-4 h-4 text-sky-300"></i>
+                Configuraciones 20’/40’ · compatibilidad sujeta a especificación del tanque.
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="route" class="w-4 h-4 text-indigo-300"></i>
+                Intermodal puerto–planta y rutas nacionales dedicadas.
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-300"></i>
+                <a href="isotanques.html" class="text-emerald-300 hover:text-emerald-200">Ver operación en isotanques
+                  →</a>
+              </li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // Scroll Reveal Observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('section, header, .glass-premium').forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+      });
+
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="col-span-1">
+          <span class="text-white text-lg font-semibold tracking-tighter uppercase block mb-4">ROTERO</span>
+          <p class="text-xs leading-relaxed max-w-xs">Soluciones logísticas integrales. Conectando negocios con el mundo
+            a través de servicios de transporte seguros y eficientes.</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Servicios</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="isotanques.html" class="hover:text-white transition">Isotanques</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Carga General</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">HazMat</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Empresa</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="nosotros.html" class="hover:text-white transition">Nosotros</a></li>
+            <li><a href="unidades.html" class="hover:text-white transition">Flota</a></li>
+            <li><a href="tienda.html" class="hover:text-white transition text-blue-400">Tienda</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Síguenos</h3>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/WLSRotero/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+            <a href="https://instagram.com/logistica_rotero" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <a href="https://x.com/WROTERO" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="https://www.linkedin.com/in/worlds-logistic-solutions-rotero-b3693b2b7" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs">© 2026 ROTERO Logistics Solutions. Todos los derechos reservados.</p>
+        <div class="flex gap-6">
+          <a href="aviso-privacidad.html" class="text-xs hover:text-white transition">Aviso de Privacidad</a>
+          <a href="terminos-condiciones.html" class="text-xs hover:text-white transition">Términos y Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

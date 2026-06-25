@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROTERO | World's Logistic Solutions</title>
+  <link rel="icon" type="image/png" href="assets/favicon-rotero.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Grid tenue para el fondo (toda la web) */
+    .bg-grid-white {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+    }
+
+    /* CTA brillante (Cotizar) */
+    @property --gradient-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    .shiny-cta {
+      position: relative;
+      overflow: hidden;
+      border-radius: 9999px;
+      padding: .5rem 1.25rem;
+      font-size: .75rem;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      isolation: isolate;
+      outline-offset: 4px;
+      z-index: 0;
+      background: linear-gradient(#000, #000) padding-box,
+        conic-gradient(from var(--gradient-angle), transparent 0%, #3b82f6 5%, #8484ff 15%, #3b82f6 30%, transparent 40%) border-box;
+      border: 1px solid transparent;
+      box-shadow: inset 0 0 0 1px #1a1818;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      animation: border-spin 2.5s linear infinite;
+    }
+
+    @keyframes border-spin {
+      to {
+        --gradient-angle: 360deg;
+      }
+    }
+
+    .shiny-cta::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(-50deg, transparent, #3b82f6, transparent);
+      mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+      opacity: .6;
+      animation: shimmer 4s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+
+    /* NAV estilo iOS glass */
+    .glass-ios {
+      background:
+        radial-gradient(120% 180% at 15% 10%, rgba(255, 255, 255, .18) 0%, rgba(255, 255, 255, .06) 35%, rgba(255, 255, 255, .02) 60%, transparent 100%),
+        linear-gradient(180deg, rgba(28, 31, 41, .68) 0%, rgba(18, 20, 28, .58) 100%);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(0, 0, 0, .25), 0 10px 30px rgba(0, 0, 0, .45);
+    }
+
+    .glass-ios::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, .08), transparent);
+      mask-image: linear-gradient(to right, transparent 0%, black 40% 60%, transparent 100%);
+      animation: ios-sheen 6s linear infinite;
+    }
+
+    @keyframes ios-sheen {
+      0% {
+        transform: translateX(-30%);
+        opacity: .7
+      }
+
+      50% {
+        transform: translateX(30%);
+        opacity: .4
+      }
+
+      100% {
+        transform: translateX(100%);
+        opacity: 0
+      }
+    }
+
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* ===== Carrusel de logos (marquee) ===== */
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    .logos-track {
+      animation: marquee 26s linear infinite;
+      will-change: transform;
+      display: flex;
+      width: max-content;
+      align-items: center;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .logos-track {
+        animation: none;
+        transform: translateX(0);
+      }
+    }
+
+    .marquee__group {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      margin-right: 2.5rem;
+      list-style: none;
+    }
+
+    .logo-img {
+      display: block;
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      object-position: center;
+      filter: grayscale(100%) contrast(1.05) opacity(.9);
+      transition: filter .2s ease;
+    }
+
+    .logo-pill:hover .logo-img {
+      filter: grayscale(0%) opacity(1);
+    }
+
+    .logos-viewport {
+      height: 64px;
+      overflow: hidden;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    @media (min-width:1024px) {
+      .logo-img {
+        height: 52px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .logos-viewport {
+        mask-image: none;
+        height: 56px;
+      }
+
+      .logo-img {
+        height: 32px;
+      }
+
+      .logos-track {
+        animation-duration: 20s;
+      }
+    }
+  </style>
+</head>
+
+<body class="antialiased selection:bg-slate-900 selection:text-white text-slate-600 bg-slate-50">
+
+  <!-- Fondo cuadriculado + glow -->
+  <div class="fixed inset-0 -z-10 pointer-events-none">
+    <div class="absolute inset-0 bg-slate-900/80"></div>
+    <div
+      class="absolute inset-0 bg-grid-white bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_35%,transparent_100%)]">
+    </div>
+    <div
+      class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[900px] h-[520px] bg-blue-900/25 blur-[110px] rounded-full">
+    </div>
+    <div class="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent">
+    </div>
+    <div class="absolute top-0 bottom-0 right-1/4 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent">
+    </div>
+  </div>
+
+  <!-- Menú superior -->
+  <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50">
+    <div class="relative glass-premium rounded-full px-6 py-3 flex items-center justify-between">
+      <a href="#inicio" class="inline-flex items-center gap-2 font-semibold tracking-wide" aria-label="Inicio">
+        <img src="assets/ROTERO SVG.svg" alt="ROTERO" class="h-12 w-auto object-contain select-none" />
+      </a>
+
+      <!-- Menú desktop -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
+        <a href="index.html" class="hover:text-white transition">Inicio</a>
+        <a href="servicios.html" class="hover:text-white transition">Servicios</a>
+        <a href="isotanques.html" class="hover:text-white transition">Isotanques</a>
+        <a href="unidades.html" class="hover:text-white transition">Unidades</a>
+        <a href="nosotros.html" class="hover:text-white transition">Nosotros</a>
+        <a href="tienda.html" class="hover:text-white transition">Tienda</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <!-- COTIZAR -> WhatsApp -->
+        <a href="https://wa.me/525578165646?text=Hola%21%20Vengo%20de%20la%20web%20Rotero" target="_blank"
+          rel="noopener" class="shiny-cta-premium group inline-flex items-center gap-1 whitespace-nowrap"
+          aria-label="Cotizar por WhatsApp">
+          <span>COTIZAR</span>
+          <i data-lucide="arrow-right" class="w-3 h-3 transition-transform group-hover:translate-x-0.5"></i>
+        </a>
+
+        <!-- Botón menú móvil -->
+        <button id="mobile-menu-toggle"
+          class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-white/25 text-neutral-100 hover:border-emerald-400 hover:text-emerald-300 transition"
+          aria-label="Abrir menú de navegación">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel menú móvil -->
+    <div id="mobile-menu" class="md:hidden mt-3 hidden">
+      <div class="glass-ios rounded-3xl px-5 py-4 text-sm text-neutral-100">
+        <nav class="flex flex-col gap-1">
+          <a href="index.html" class="py-2 border-b border-white/10 hover:text-white transition">Inicio</a>
+          <a href="servicios.html" class="py-2 border-b border-white/10 hover:text-white transition">Servicios</a>
+          <a href="isotanques.html" class="py-2 border-b border-white/10 hover:text-white transition">Isotanques</a>
+          <a href="unidades.html" class="py-2 border-b border-white/10 hover:text-white transition">Unidades</a>
+          <a href="nosotros.html" class="py-2 border-b border-white/10 hover:text-white transition">Nosotros</a>
+          <a href="tienda.html" class="py-2 border-b border-white/10 hover:text-white transition">Tienda</a>
+          <a href="https://wa.me/525569625879?text=Hola%21%20Vengo%20de%20la%20web%20Rotero" target="_blank"
+            rel="noopener"
+            class="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-emerald-500 text-slate-900 font-medium hover:bg-emerald-400 transition">
+            Cotizar por WhatsApp
+            <i data-lucide="message-circle" class="w-4 h-4"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO con imagen SIN desenfoque + degradado radial azul a la izquierda -->
+  <section class="relative pt-32 lg:pt-48 pb-20 lg:pb-32 overflow-hidden" id="inicio">
+    <div class="absolute inset-0 z-0">
+      <img src="assets/puerto.webp" alt="Buque de carga"
+        class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" fetchpriority="high" />
+      <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-transparent"></div>
+      <div
+        class="absolute inset-0 pointer-events-none bg-[radial-gradient(600px_380px_at_12%_55%,rgba(8,145,178,0.65),transparent_70%)]">
+      </div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:text-left text-center">
+      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white mb-6 font-outfit">
+        World’s Logistic <br class="hidden sm:block"> Solutions <span class="text-primary">ROTERO</span>
+      </h1>
+      <p class="mt-4 text-lg sm:text-xl text-slate-200 max-w-2xl mx-auto sm:mx-0 font-light leading-relaxed">
+        Conectando destinos, entregando confianza. Soluciones integrales de logística 4PL, transporte terrestre y
+        gestión de isotanques a nivel global.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
+        <a href="#contacto"
+          class="inline-flex justify-center items-center px-6 py-3 rounded-lg text-slate-900 bg-white hover:bg-slate-100 transition">
+          Cotizar envío
+          <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Texto izq/der + video (dentro del card) -->
+  <section class="bg-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div
+        class="group relative rounded-3xl border border-slate-200 bg-white/80 backdrop-blur-sm shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition duration-500">
+        <div
+          class="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition duration-500 [background:radial-gradient(120%_80%_at_10%_10%,rgba(59,130,246,.08),transparent_60%)]">
+        </div>
+
+        <div class="relative p-6 sm:p-10">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <p class="text-2xl md:text-3xl leading-snug text-slate-900">
+              <span class="font-semibold">Movemos más que paquetes:</span> en rotero llevamos confianza y excelencia en
+              cada ruta.
+            </p>
+            <p class="text-slate-600 md:text-lg">
+              Somos una empresa 4PL especializada en la logística de materiales peligrosos. Ofrecemos soluciones
+              seguras, eficientes y certificadas para el manejo, transporte y almacenamiento de mercancías especiales.
+              Utilizamos tecnología avanzada y procesos optimizados para garantizar el cumplimiento de normativas,
+              protegiendo a nuestros clientes y al medio ambiente.
+            </p>
+          </div>
+
+          <div class="relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
+            <video class="w-full h-full max-h-[680px] object-cover" src="assets/Inicio.mp4" playsinline autoplay muted
+              loop></video>
+            <div
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent">
+            </div>
+          </div>
+
+          <div class="pt-6 text-center">
+            <a href="nosotros.html"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 bg-white/80 backdrop-blur-md text-slate-900 hover:bg-white transition shadow-sm">
+              Conoce más sobre nosotros
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Carrusel de “Empresas que confían en nosotros” ===== -->
+  <section class="bg-white border-y border-slate-100 py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-sm font-medium text-slate-400 uppercase tracking-widest mb-6">
+        Empresas que confían en nosotros
+      </p>
+
+      <div class="relative">
+        <div
+          class="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white via-white/80 to-transparent hidden sm:block">
+        </div>
+        <div
+          class="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white via-white/80 to-transparent hidden sm:block">
+        </div>
+
+        <div class="logos-viewport">
+          <div class="logos-track whitespace-nowrap">
+            <ul class="marquee__group">
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/aoc.svg" alt="AOC Mexicana"></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/kingchemical.svg" alt="King Chemical"></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/mane.svg" alt="MANE"></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/orion.svg" alt="ORION"></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/polimeros.svg" alt="Polímeros"></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/safe.svg" alt="SAFE"></li>
+            </ul>
+            <ul class="marquee__group" aria-hidden="true">
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/aoc.svg" alt=""></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/kingchemical.svg" alt=""></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/mane.svg" alt=""></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/orion.svg" alt=""></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/polimeros.svg" alt=""></li>
+              <li class="logo-pill"><img class="logo-img" src="assets/logos/safe.svg" alt=""></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios" class="py-20 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Soluciones a medida</h2>
+        <p class="mt-4 text-slate-500">Servicios logísticos diseñados para la industria moderna, con la flexibilidad que
+          tu negocio necesita.</p>
+        <a href="servicios.html"
+          class="inline-flex items-center gap-2 mt-6 px-5 py-3 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition">
+          Conoce todos nuestros servicios
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+
+      <!-- GRID de servicios (resumido) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          class="bg-white p-6 rounded-xl border border-slate-200 transition duration-300 hover:border-slate-300 hover:shadow-lg">
+          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="box" class="w-5 h-5 text-slate-700"></i>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900 mb-2">Carga General</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Transporte eficiente para mercancías estándar con cobertura
+            nacional.</p>
+        </div>
+
+        <div class="relative group">
+          <div
+            class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-sky-500 to-cyan-400 opacity-40 blur-xl transition duration-500 group-hover:opacity-70">
+          </div>
+          <div
+            class="relative p-6 rounded-xl shadow-xl text-white bg-gradient-to-br from-sky-600 via-sky-600 to-cyan-600">
+            <span
+              class="absolute top-0 right-0 bg-black/60 backdrop-blur-sm text-[10px] font-semibold px-2 py-1 rounded-bl-lg">ESPECIALIDAD</span>
+            <div class="w-10 h-10 bg-white/15 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="cylinder" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Isotanques</h3>
+            <p class="text-sm text-white/90 leading-relaxed">Soluciones certificadas para líquidos a granel y productos
+              químicos.</p>
+          </div>
+        </div>
+
+        <div class="relative group">
+          <div
+            class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-orange-500 to-rose-500 opacity-40 blur-xl transition duration-500 group-hover:opacity-70">
+          </div>
+          <div
+            class="relative p-6 rounded-xl shadow-xl text-white bg-gradient-to-br from-orange-600 via-orange-600 to-rose-600">
+            <span
+              class="absolute top-0 right-0 bg-black/60 backdrop-blur-sm text-[10px] font-semibold px-2 py-1 rounded-bl-lg">ESPECIALIDAD</span>
+            <div class="w-10 h-10 bg-white/15 rounded-lg flex items-center justify-center mb-4">
+              <i data-lucide="triangle-alert" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">HazMat</h3>
+            <p class="text-sm text-white/90 leading-relaxed">Manejo seguro de materiales peligrosos con operadores
+              certificados.</p>
+          </div>
+        </div>
+
+        <div
+          class="bg-white p-6 rounded-xl border border-slate-200 transition duration-300 hover:border-slate-300 hover:shadow-lg">
+          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="maximize" class="w-5 h-5 text-slate-700"></i>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900 mb-2">Sobredimensionada</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Logística especializada y Lowboy para cargas de gran
+            volumen.</p>
+        </div>
+
+        <div
+          class="bg-white p-6 rounded-xl border border-slate-200 transition duration-300 hover:border-slate-300 hover:shadow-lg">
+          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="globe" class="w-5 h-5 text-slate-700"></i>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900 mb-2">Import/Export</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Gestión aduanal y coordinación puerto-destino.</p>
+        </div>
+
+        <div
+          class="bg-white p-6 rounded-xl border border-slate-200 transition duration-300 hover:border-slate-300 hover:shadow-lg">
+          <div class="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+            <i data-lucide="truck" class="w-5 h-5 text-slate-700"></i>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900 mb-2">Transporte Nacional</h3>
+          <p class="text-sm text-slate-500 leading-relaxed">Cobertura completa en todo el territorio mexicano.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Isotanques (con CTA integrado) ===== -->
+  <section id="isotanques" class="py-20 bg-slate-900 text-white overflow-hidden relative">
+    <div class="absolute top-0 right-0 opacity-10 pointer-events-none">
+      <svg width="400" height="400" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#FFFFFF"
+          d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-4.9C93.5,9.3,82.2,22.9,71.6,35.1C61,47.3,51.1,58.1,39.3,65.6C27.5,73.1,13.8,77.3,0.6,76.3C-12.6,75.3,-25.2,69.1,-37.6,62C-50,54.9,-62.2,46.9,-71.8,36.2C-81.4,25.5,-88.4,12.1,-87.3,-0.6C-86.2,-13.4,-77,-25.5,-67,-35.8C-57,-46.1,-46.2,-54.6,-34.6,-63.4C-23,-72.2,-10.6,-81.3,3.2,-86.8C16.9,-92.4,30.5,-101.9,44.7,-76.4Z"
+          transform="translate(100 100)"></path>
+      </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="text-blue-400 font-semibold tracking-wide uppercase text-xs mb-2 block">Especialistas en
+            Líquidos</span>
+          <h2 class="text-3xl lg:text-4xl font-semibold tracking-tight mb-6">Operación de Isotanques ROTERO</h2>
+          <p class="text-slate-300 text-lg leading-relaxed mb-8">
+            Maximizamos la seguridad y eficiencia en el traslado de químicos y alimentos líquidos. Contamos con
+            infraestructura dedicada para el resguardo y maniobra.
+          </p>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start"><i data-lucide="check-circle"
+                class="w-5 h-5 text-blue-400 mt-0.5 mr-3 shrink-0"></i><span class="text-slate-300 text-sm">Traslados
+                Puerto–Planta sin interrupciones.</span></li>
+            <li class="flex items-start"><i data-lucide="check-circle"
+                class="w-5 h-5 text-blue-400 mt-0.5 mr-3 shrink-0"></i><span class="text-slate-300 text-sm">Patios de
+                resguardo autorizados.</span></li>
+            <li class="flex items-start"><i data-lucide="check-circle"
+                class="w-5 h-5 text-blue-400 mt-0.5 mr-3 shrink-0"></i><span class="text-slate-300 text-sm">Atención a
+                sector Químico y Alimenticio.</span></li>
+          </ul>
+          <!-- CTA reubicado aquí -->
+          <div class="flex flex-wrap items-center gap-4">
+            <a href="isotanques.html"
+              class="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition">
+              Conoce toda nuestra operación de isotanques
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+            <a href="#contacto"
+              class="inline-flex items-center text-white font-medium border-b border-blue-400 pb-1 hover:text-blue-300 transition">
+              Cotiza tu proyecto en isotanques <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative bg-slate-800 rounded-2xl p-8 border border-slate-700">
+          <h3 class="text-lg font-medium text-white mb-6">Ventajas Competitivas</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="flex flex-col gap-2">
+              <i data-lucide="shield-check" class="w-6 h-6 text-blue-400"></i>
+              <h4 class="text-sm font-semibold text-white">Seguridad Total</h4>
+              <p class="text-xs text-slate-400">Protocolos estrictos para materiales peligrosos.</p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <i data-lucide="leaf" class="w-6 h-6 text-blue-400"></i>
+              <h4 class="text-sm font-semibold text-white">Sostenibilidad</h4>
+              <p class="text-xs text-slate-400">Menor huella de carbono comparado con tambores.</p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <i data-lucide="scale" class="w-6 h-6 text-blue-400"></i>
+              <h4 class="text-sm font-semibold text-white">Capacidad</h4>
+              <p class="text-xs text-slate-400">Hasta 26,000 litros por unidad.</p>
+            </div>
+            <div class="flex flex-col gap-2">
+              <i data-lucide="dollar-sign" class="w-6 h-6 text-blue-400"></i>
+              <h4 class="text-sm font-semibold text-white">Costos</h4>
+              <p class="text-xs text-slate-400">Reducción operativa en carga y descarga.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NUEVA sección: Cobertura ===== -->
+  <section id="cobertura" class="py-20 bg-white border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div>
+          <span
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-medium text-slate-800 mb-4">
+            <i data-lucide="map" class="w-3.5 h-3.5"></i> Cobertura
+          </span>
+          <h2 class="text-3xl font-semibold tracking-tight text-slate-900 mb-4">Operamos donde tu negocio nos necesita
+          </h2>
+          <ul class="space-y-4 text-slate-600">
+            <li class="flex gap-3"><i data-lucide="route" class="w-5 h-5 text-slate-900 mt-1"></i>
+              <p><strong>Cobertura terrestre nacional</strong> con rutas dedicadas y tiempos garantizados.</p>
+            </li>
+            <li class="flex gap-3"><i data-lucide="ship" class="w-5 h-5 text-slate-900 mt-1"></i>
+              <p><strong>Puertos clave</strong>: Altamira, Veracruz, Manzanillo, Lázaro Cárdenas, Ensenada.</p>
+            </li>
+            <li class="flex gap-3"><i data-lucide="globe-2" class="w-5 h-5 text-slate-900 mt-1"></i>
+              <p><strong>Red global</strong> a través de socios navieros para importación y exportación.</p>
+            </li>
+          </ul>
+          <div class="mt-6">
+            <a href="servicios.html"
+              class="inline-flex items-center gap-2 text-slate-900 font-medium border-b border-slate-300 hover:border-slate-900">
+              Ver todos nuestros servicios
+              <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+        </div>
+
+        <div
+          class="shadow-2xl border border-slate-200 rounded-2xl overflow-hidden bg-[#0a1128] flex items-center justify-center p-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%">
+            <defs>
+              <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#0a1128" />
+                <stop offset="100%" stop-color="#1c2541" />
+              </linearGradient>
+
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+
+              <style>
+                .route {
+                  fill: none;
+                  stroke: #00e5ff;
+                  stroke-width: 1.5;
+                }
+
+                .route:hover {
+                  stroke-width: 2.5;
+                  opacity: 1;
+                  stroke: #ff9f1c;
+                }
+
+                .node {
+                  fill: #ff9f1c;
+                  cursor: pointer;
+                  transition: r 0.3s ease;
+                }
+
+                .node:hover {
+                  r: 8;
+                  fill: #fff;
+                }
+
+                .label {
+                  fill: #aeb8c7;
+                  font-family: 'Segoe UI', Arial, sans-serif;
+                  font-size: 11px;
+                  pointer-events: none;
+                }
+
+
+
+                @keyframes pulse {
+                  0% {
+                    r: 4;
+                    opacity: 1;
+                  }
+
+                  50% {
+                    r: 6;
+                    opacity: 0.8;
+                  }
+
+                  100% {
+                    r: 4;
+                    opacity: 1;
+                  }
+                }
+
+                .node-pulse {
+                  animation: pulse 2s infinite;
+                }
+              </style>
+            </defs>
+
+            <rect width="1000" height="500" fill="url(#bgGrad)" />
+
+            <text x="30" y="40" fill="#ffffff" font-family="Outfit, Arial, sans-serif" font-size="20" font-weight="bold"
+              letter-spacing="1">RED PORTUARIA GLOBAL</text>
+            <text x="30" y="60" fill="#00e5ff" font-family="Inter, Arial, sans-serif" font-size="12">Intercambio
+              marítimo en tiempo real</text>
+
+            <g id="map-countries" stroke-linejoin="round"></g>
+            <g id="map-routes" filter="url(#glow)"></g>
+            <g id="map-nodes"></g>
+          </svg>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Unidades -->
+  <section id="unidades" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-end mb-12">
+        <div>
+          <h2 class="text-3xl font-semibold tracking-tight text-slate-900">Nuestra Flota</h2>
+          <p class="mt-2 text-slate-500">Unidades modernas y adaptadas a cada necesidad.</p>
+        </div>
+        <div class="hidden sm:flex gap-2">
+          <button class="p-2 rounded-full border border-slate-200 hover:bg-slate-50 transition"><i
+              data-lucide="chevron-left" class="w-5 h-5 text-slate-600"></i></button>
+          <button class="p-2 rounded-full border border-slate-200 hover:bg-slate-50 transition"><i
+              data-lucide="chevron-right" class="w-5 h-5 text-slate-600"></i></button>
+        </div>
+      </div>
+
+      <div class="flex overflow-x-auto gap-6 pb-8 hide-scrollbar snap-x snap-mandatory">
+        <div class="min-w-[280px] sm:min-w-[320px] bg-slate-50 border border-slate-100 rounded-xl p-6 snap-center">
+          <div
+            class="h-32 rounded-lg mb-4 overflow-hidden flex items-center justify-center bg-white border border-slate-200">
+            <img src="assets/flota/nissanbod.webp" alt="Nissan / Rabón" class="h-full w-auto object-contain"
+              loading="lazy">
+          </div>
+          <h3 class="font-semibold text-slate-900">Nissan / Rabón</h3>
+          <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Carga Ligera</p>
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2 text-sm text-slate-600">
+            <div><span class="block text-xs text-slate-400">Capacidad</span> 1.5 - 8 Ton</div>
+            <div><span class="block text-xs text-slate-400">Uso</span> Reparto Urbano</div>
+          </div>
+        </div>
+
+        <div class="min-w-[280px] sm:min-w-[320px] bg-slate-50 border border-slate-100 rounded-xl p-6 snap-center">
+          <div
+            class="h-32 rounded-lg mb-4 overflow-hidden flex items-center justify-center bg-white border border-slate-200">
+            <img src="assets/flota/tortonbod.webp" alt="Torton" class="h-full w-auto object-contain" loading="lazy">
+          </div>
+          <h3 class="font-semibold text-slate-900">Torton</h3>
+          <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Carga Media</p>
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2 text-sm text-slate-600">
+            <div><span class="block text-xs text-slate-400">Capacidad</span> 15 - 18 Ton</div>
+            <div><span class="block text-xs text-slate-400">Uso</span> Regional</div>
+          </div>
+        </div>
+
+        <div class="min-w-[280px] sm:min-w-[320px] bg-slate-50 border border-slate-100 rounded-xl p-6 snap-center">
+          <div
+            class="h-32 rounded-lg mb-4 overflow-hidden flex items-center justify-center bg-white border border-slate-200">
+            <img src="assets/flota/camion53bod.webp" alt="Cajas 48’ y 53’" class="h-full w-auto object-contain"
+              loading="lazy">
+          </div>
+          <h3 class="font-semibold text-slate-900">Cajas 48' y 53'</h3>
+          <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Gran Volumen</p>
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2 text-sm text-slate-600">
+            <div><span class="block text-xs text-slate-400">Capacidad</span> 25 Ton</div>
+            <div><span class="block text-xs text-slate-400">Uso</span> Larga Distancia</div>
+          </div>
+        </div>
+
+        <div class="min-w-[280px] sm:min-w-[320px] bg-slate-50 border border-slate-100 rounded-xl p-6 snap-center">
+          <div
+            class="h-32 rounded-lg mb-4 overflow-hidden flex items-center justify-center bg-white border border-slate-200">
+            <img src="assets/flota/portabod.webp" alt="Portacontenedor" class="h-full w-auto object-contain"
+              loading="lazy">
+          </div>
+          <h3 class="font-semibold text-slate-900">Portacontenedor</h3>
+          <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Intermodal</p>
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2 text-sm text-slate-600">
+            <div><span class="block text-xs text-slate-400">Config</span> 20' / 40'</div>
+            <div><span class="block text-xs text-slate-400">Uso</span> Import/Export</div>
+          </div>
+        </div>
+
+        <div class="min-w-[280px] sm:min-w-[320px] bg-slate-50 border border-slate-100 rounded-xl p-6 snap-center">
+          <div
+            class="h-32 rounded-lg mb-4 overflow-hidden flex items-center justify-center bg-white border border-slate-200">
+            <img src="assets/flota/lowbod.webp" alt="Lowboy" class="h-full w-auto object-contain" loading="lazy">
+          </div>
+          <h3 class="font-semibold text-slate-900">Lowboy</h3>
+          <p class="text-xs text-slate-500 mt-1 uppercase tracking-wide">Especializado</p>
+          <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-2 text-sm text-slate-600">
+            <div><span class="block text-xs text-slate-400">Capacidad</span> Alto tonelaje</div>
+            <div><span class="block text-xs text-slate-400">Uso</span> Sobredimensionado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <a href="unidades.html"
+          class="text-sm font-medium text-slate-900 border-b border-slate-300 hover:border-slate-900 transition pb-0.5">Ver
+          flota completa</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿Por qué ROTERO? -->
+  <section id="nosotros" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-semibold tracking-tight text-slate-900">¿Por qué ROTERO?</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+          <i data-lucide="layers" class="w-8 h-8 text-slate-700 mb-4"></i>
+          <h3 class="font-medium text-slate-900 mb-2">Flexibilidad 4PL</h3>
+          <p class="text-sm text-slate-500">Adaptamos la logística a tus procesos, no al revés.</p>
+        </div>
+        <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+          <i data-lucide="trending-down" class="w-8 h-8 text-slate-700 mb-4"></i>
+          <h3 class="font-medium text-slate-900 mb-2">Costos Competitivos</h3>
+          <p class="text-sm text-slate-500">Optimización de rutas y tiempos para mejorar tu margen.</p>
+        </div>
+        <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+          <i data-lucide="graduation-cap" class="w-8 h-8 text-slate-700 mb-4"></i>
+          <h3 class="font-medium text-slate-900 mb-2">Capacitación</h3>
+          <p class="text-sm text-slate-500">Operadores certificados y equipo en mejora continua.</p>
+        </div>
+        <div class="p-6 bg-slate-50 rounded-xl border border-slate-100">
+          <i data-lucide="heart-handshake" class="w-8 h-8 text-slate-700 mb-4"></i>
+          <h3 class="font-medium text-slate-900 mb-2">Responsabilidad</h3>
+          <p class="text-sm text-slate-500">Compromiso real con el ambiente y la comunidad.</p>
+        </div>
+      </div>
+
+      <div class="mt-20 pt-16 border-t border-slate-100">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+          <div>
+            <h4 class="font-semibold text-slate-900 mb-2">Compromiso Ambiental</h4>
+            <p class="text-sm text-slate-500">Flota moderna para reducción de emisiones y gestión responsable de
+              residuos HazMat.</p>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-900 mb-2">Responsabilidad con Empleados</h4>
+            <p class="text-sm text-slate-500">Seguridad laboral, capacitación constante y condiciones de trabajo dignas.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold text-slate-900 mb-2">Impacto en la Comunidad</h4>
+            <p class="text-sm text-slate-500">Programas de apoyo local y desarrollo sostenible en nuestras zonas de
+              operación.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clientes (testimonios) — versión ÚNICA y limpia -->
+  <section id="socios-testimonios" class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-center text-2xl sm:text-3xl font-semibold text-slate-900 mb-10">
+        Lo que dicen nuestros socios
+      </h2>
+
+      <div class="relative flex items-center gap-3">
+        <!-- Prev -->
+        <button type="button"
+          class="shrink-0 grid place-items-center w-10 h-10 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+          aria-label="Anterior" data-twc-prev>
+          ‹
+        </button>
+
+        <!-- Viewport -->
+        <div class="flex-1 overflow-hidden" aria-live="polite">
+          <div id="twc-track" class="flex gap-4 transition-transform duration-500 ease-out">
+            <!-- Orion -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/orion.svg" alt="Orion" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">Orion Chemicals</strong>
+                  <div class="text-[13px] text-slate-500">Gerente de Operaciones</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “ROTERO se hizo cargo de la logística HazMat puerto–planta sin contratiempos.
+                Documentación impecable y tiempos exactos.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★★</div>
+            </article>
+
+            <!-- AOC -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/aoc.svg" alt="AOC" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">AOC Resins</strong>
+                  <div class="text-[13px] text-slate-500">Líder de Abastecimiento</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “Excelente coordinación 4PL. Visibilidad en tiempo real y rápida respuesta ante cambios de itinerario.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★★</div>
+            </article>
+
+            <!-- SAFE -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/safe.svg" alt="SAFE" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">SAFE</strong>
+                  <div class="text-[13px] text-slate-500">Supply Chain Manager</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “Operación segura para materiales peligrosos. Protocolos claros y personal muy capacitado.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★★</div>
+            </article>
+
+            <!-- Mane -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/mane.svg" alt="Mane" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">Mane</strong>
+                  <div class="text-[13px] text-slate-500">Coordinación Logística LATAM</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “De puerto a planta en tiempo. La documentación aduanal llegó perfecta y a la primera.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★☆</div>
+            </article>
+
+            <!-- King Chemical -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/kingchemical.svg" alt="King Chemical" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">King Chemical</strong>
+                  <div class="text-[13px] text-slate-500">Jefe de Logística</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “Buen control de isotanques: heating/cleaning coordinado y seguimiento constante hasta la entrega.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★★</div>
+            </article>
+
+            <!-- Polímeros -->
+            <article
+              class="min-w-[320px] sm:min-w-[360px] bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md">
+              <header class="flex items-center gap-3 mb-2">
+                <img src="assets/logos/polimeros.svg" alt="Polímeros" class="w-9 h-9 object-contain">
+                <div>
+                  <strong class="font-semibold text-slate-900">Polímeros</strong>
+                  <div class="text-[13px] text-slate-500">Compras Estratégicas</div>
+                </div>
+              </header>
+              <p class="text-slate-900 leading-relaxed mb-2">
+                “Rutas optimizadas y tarifas competitivas. Comunicación clara en cada hito de la cadena.”
+              </p>
+              <div class="text-amber-500 tracking-[2px]">★★★★☆</div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Next -->
+        <button type="button"
+          class="shrink-0 grid place-items-center w-10 h-10 rounded-full border border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+          aria-label="Siguiente" data-twc-next>
+          ›
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Carrusel minimalista (única versión)
+    (function () {
+      const root = document.getElementById('socios-testimonios');
+      if (!root) return;
+      const track = root.querySelector('#twc-track');
+      const prev = root.querySelector('[data-twc-prev]');
+      const next = root.querySelector('[data-twc-next]');
+
+      let i = 0;
+      const cardW = () => (root.querySelector('article').offsetWidth + 16);
+      const maxI = () => track.children.length - Math.round(root.offsetWidth / cardW());
+
+      function go(dir) {
+        i = Math.min(Math.max(i + dir, 0), Math.max(maxI(), 0));
+        track.style.transform = `translateX(${-i * cardW()}px)`;
+      }
+
+      prev.addEventListener('click', () => go(-1));
+      next.addEventListener('click', () => go(1));
+      window.addEventListener('resize', () => go(0));
+    })();
+  </script>
+
+  <!-- ===== Tienda Teaser ===== -->
+  <section class="py-20 bg-slate-50 border-t border-slate-200 overflow-hidden relative">
+    <div class="absolute inset-0 top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_top_right,#e0f2fe_0%,transparent_50%)] opacity-60"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-6">
+            <i data-lucide="package" class="w-3.5 h-3.5"></i>
+            Venta de Equipo Rotero
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 mb-6 font-outfit">Equipamiento logístico a tu alcance</h2>
+          <p class="text-slate-600 text-lg mb-8 leading-relaxed">
+            Explora nuestro catálogo en línea y solicita cotización directa de isotanques, montacargas, tarimas y consumibles de grado industrial. Sin intermediarios, con todo el respaldo y garantía ROTERO.
+          </p>
+          <a href="tienda.html" class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition shadow-lg shadow-blue-500/25">
+            Explorar Catálogo
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+        <div class="relative hidden lg:block">
+           <div class="aspect-[4/3] rounded-2xl bg-white border border-slate-200 shadow-xl overflow-hidden p-6 relative">
+              <div class="grid grid-cols-2 gap-4 h-full">
+                 <div class="bg-slate-100 rounded-xl" style="background-image: url('assets/tienda/isotanque.webp'); background-size: cover; background-position: center;"></div>
+                 <div class="grid grid-rows-2 gap-4">
+                    <div class="bg-slate-100 rounded-xl" style="background-image: url('assets/tienda/montacargas.webp'); background-size: cover; background-position: center;"></div>
+                    <div class="bg-slate-100 rounded-xl" style="background-image: url('assets/tienda/tarima.webp'); background-size: cover; background-position: center;"></div>
+                 </div>
+              </div>
+              <div class="absolute bottom-4 left-4 right-4 h-12 bg-white/90 backdrop-blur rounded-lg border border-slate-100 flex items-center px-4 shadow-sm">
+                 <span class="text-sm font-semibold text-slate-800">Catálogo de Venta Directa</span>
+                 <i data-lucide="chevron-right" class="w-4 h-4 ml-auto text-slate-400"></i>
+              </div>
+           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto" class="py-20 bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-semibold tracking-tight mb-6">¿Listo para optimizar tu logística?</h2>
+          <p class="text-slate-400 text-lg mb-8">Solicita una cotización personalizada. Nuestro equipo de expertos te
+            responderá en breve para diseñar la mejor ruta para tu negocio.</p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-4"><i data-lucide="map-pin" class="w-5 h-5 text-slate-400"></i><span
+                class="text-sm text-slate-300">Tláhuac, Ciudad de México</span></div>
+            <div class="flex items-center gap-4"><i data-lucide="mail" class="w-5 h-5 text-slate-400"></i><span
+                class="text-sm text-slate-300">cotizaciones@logistica-rotero.com</span></div>
+            <div class="flex items-center gap-4"><i data-lucide="phone" class="w-5 h-5 text-slate-400"></i><span
+                class="text-sm text-slate-300">+52 (55) 7816 5646</span></div>
+          </div>
+
+          <div class="mt-8">
+            <a href="https://wa.me/525578165646?text=Hola%21%20Vengo%20de%20la%20web%20Rotero" target="_blank"
+              rel="noopener"
+              class="inline-flex items-center px-6 py-3 rounded-lg text-slate-900 bg-green-500 hover:bg-green-400 transition">
+              <i data-lucide="message-circle" class="w-5 h-5 mr-2"></i> Contactar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 sm:p-8 text-slate-900">
+          <div class="bg-white rounded-2xl p-6 sm:p-8 text-slate-900">
+            <form action="https://formspree.io/f/myzrdrbv" method="POST" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">
+                    Nombre / Empresa
+                  </label>
+                  <input type="text" name="nombre" required
+                    class="block w-full rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm"
+                    placeholder="Tu nombre o razón social">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">
+                    Correo / Teléfono
+                  </label>
+                  <input type="text" name="contacto" required
+                    class="block w-full rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm"
+                    placeholder="correo@empresa.com / +52 ...">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">
+                  Tipo de servicio
+                </label>
+                <div class="relative">
+                  <select name="servicio" required
+                    class="block w-full appearance-none rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm pr-8">
+                    <option value="">Seleccionar servicio</option>
+                    <option>Isotanques (Líquidos/Químicos)</option>
+                    <option>Transporte HazMat</option>
+                    <option>Carga general</option>
+                    <option>Sobredimensionada</option>
+                    <option>Importación / Exportación</option>
+                  </select>
+                  <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">
+                    Origen
+                  </label>
+                  <input type="text" name="origen"
+                    class="block w-full rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm"
+                    placeholder="Puerto / Ciudad de origen">
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-slate-700 mb-1">
+                    Destino
+                  </label>
+                  <input type="text" name="destino"
+                    class="block w-full rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm"
+                    placeholder="Planta / Ciudad de destino">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-medium text-slate-700 mb-1">
+                  Detalles de la carga
+                </label>
+                <textarea name="detalles" rows="3"
+                  class="block w-full rounded-md border-slate-300 bg-slate-50 p-2.5 text-sm focus:border-slate-500 focus:ring-slate-500 border shadow-sm"
+                  placeholder="Tipo de producto, volumen aproximado, requerimientos especiales."></textarea>
+              </div>
+
+              <!-- Opcionales para Formspree -->
+              <input type="hidden" name="_subject" value="Nueva solicitud de cotización desde rotero.com.mx">
+              <input type="hidden" name="_language" value="es" />
+              <input type="hidden" name="_next" value="https://rotero.com.mx/gracias.html">
+              <!-- Honeypot anti-spam -->
+              <input type="text" name="_gotcha" style="display:none">
+
+              <button type="submit"
+                class="w-full flex justify-center py-3 px-4 rounded-md text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 transition">
+                Solicitar cotización
+              </button>
+            </form>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="col-span-1">
+          <span class="text-white text-lg font-semibold tracking-tighter uppercase block mb-4">ROTERO</span>
+          <p class="text-xs leading-relaxed max-w-xs">Soluciones logísticas integrales. Conectando negocios con el mundo
+            a través de servicios de transporte seguros y eficientes.</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Servicios</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#isotanques" class="hover:text-white transition">Isotanques</a></li>
+            <li><a href="#servicios" class="hover:text-white transition">Carga General</a></li>
+            <li><a href="#servicios" class="hover:text-white transition">HazMat</a></li>
+            <li><a href="tienda.html" class="hover:text-white transition">Tienda</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Empresa</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#nosotros" class="hover:text-white transition">Nosotros</a></li>
+            <!-- Enlace corregido a testimonios -->
+            <li><a href="#socios-testimonios" class="hover:text-white transition">Clientes</a></li>
+            <li><a href="#unidades" class="hover:text-white transition">Flota</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">
+            Síguenos
+          </h3>
+          <div class="flex space-x-4">
+            <!-- Facebook -->
+            <a href="https://www.facebook.com/WLSRotero/" target="_blank" rel="noopener noreferrer"
+              class="hover:text-white transition">
+              <i data-lucide="facebook" class="w-5 h-5"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/logistica_rotero" target="_blank" rel="noopener noreferrer"
+              class="hover:text-white transition">
+              <i data-lucide="instagram" class="w-5 h-5"></i>
+            </a>
+
+            <!-- X (Twitter) -->
+            <a href="https://x.com/WROTERO" target="_blank" rel="noopener noreferrer"
+              class="hover:text-white transition">
+              <i data-lucide="twitter" class="w-5 h-5"></i>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/worlds-logistic-solutions-rotero-b3693b2b7" target="_blank"
+              rel="noopener noreferrer" class="hover:text-white transition">
+              <i data-lucide="linkedin" class="w-5 h-5"></i>
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs">© 2026 ROTERO Logistics Solutions. Todos los derechos reservados.</p>
+        <div class="flex gap-6">
+          <a href="aviso-privacidad.html" class="text-xs hover:text-white transition">Aviso de Privacidad</a>
+          <a href="terminos-condiciones.html" class="text-xs hover:text-white transition">Términos y Condiciones</a>
+        </div>
+      </div>
+  </footer>
+
+  <!-- Map Libraries: D3 and TopoJSON -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <script src="assets/js/advanced-map.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Lucide Icons
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // Scroll Reveal Observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('section, .reveal').forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+      });
+
+      // Mobile Menu functionality
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (toggle && menu) {
+        const icon = toggle.querySelector('i');
+        toggle.addEventListener('click', () => {
+          const isHidden = menu.classList.toggle('hidden');
+          if (icon && window.lucide) {
+            icon.setAttribute('data-lucide', isHidden ? 'menu' : 'x');
+            lucide.createIcons();
+          }
+        });
+
+        menu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            menu.classList.add('hidden');
+            if (icon && window.lucide) {
+              icon.setAttribute('data-lucide', 'menu');
+              lucide.createIcons();
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

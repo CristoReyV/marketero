@@ -1,0 +1,12 @@
+[build]
+  command   = "npm run build"
+  publish   = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Redirige todas las rutas a index.html (necesario para React Router)
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200

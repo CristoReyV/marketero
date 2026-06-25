@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a1128" />
+      <stop offset="100%" stop-color="#1c2541" />
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <style>
+      .route {
+        fill: none;
+        stroke: #00e5ff;
+        stroke-width: 1.5;
+        stroke-dasharray: 8 4;
+        animation: dash 20s linear infinite;
+        opacity: 0.7;
+      }
+      .route:hover {
+        stroke-width: 2.5;
+        opacity: 1;
+        stroke: #ff9f1c;
+      }
+      .node {
+        fill: #ff9f1c;
+        cursor: pointer;
+        transition: r 0.3s ease;
+      }
+      .node:hover {
+        r: 8;
+        fill: #fff;
+      }
+      .label {
+        fill: #aeb8c7;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        font-size: 11px;
+        pointer-events: none;
+      }
+      @keyframes dash {
+        from { stroke-dashoffset: 200; }
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes pulse {
+        0% { r: 4; opacity: 1; }
+        50% { r: 6; opacity: 0.8; }
+        100% { r: 4; opacity: 1; }
+      }
+      .node-pulse {
+        animation: pulse 2s infinite;
+      }
+    </style>
+  </defs>
+
+  <rect width="1000" height="500" fill="url(#bgGrad)" />
+
+  <text x="30" y="40" fill="#ffffff" font-family="Arial, sans-serif" font-size="20" font-weight="bold" letter-spacing="1">RED PORTUARIA GLOBAL</text>
+  <text x="30" y="60" fill="#00e5ff" font-family="Arial, sans-serif" font-size="12">Intercambio marítimo en tiempo real</text>
+
+  <g fill="#212f4d" stroke="#3a506b" stroke-width="1.5" stroke-linejoin="round">
+    <polygon points="80,30 250,20 300,80 260,150 220,220 160,200 120,150 60,90" />
+    <polygon points="220,220 280,240 330,320 290,460 250,420 210,300" />
+    <polygon points="420,30 540,20 570,80 500,120 440,90" />
+    <polygon points="440,90 500,120 550,140 600,190 580,280 540,400 480,340 430,220" />
+    <polygon points="540,20 860,20 920,90 890,170 820,240 730,280 650,230 600,190 550,140 570,80" />
+    <polygon points="780,330 890,320 860,420 750,380" />
+  </g>
+
+  <g filter="url(#glow)">
+    <path class="route" d="M 120 140 Q 50 110 0 130" />
+    <path class="route" d="M 1000 130 Q 950 110 890 120" />
+    
+    <path class="route" d="M 120 140 Q 160 190 220 220" /> <path class="route" d="M 220 220 Q 250 150 270 110" /> <path class="route" d="M 270 110 Q 375 60 480 80" />  <path class="route" d="M 220 220 Q 350 130 480 80" />  <path class="route" d="M 220 220 Q 280 280 310 340" /> <path class="route" d="M 310 340 Q 420 390 530 390" /> <path class="route" d="M 480 80 Q 510 100 530 130" />  <path class="route" d="M 530 130 Q 570 140 610 180" /> <path class="route" d="M 610 180 Q 670 240 740 270" /> <path class="route" d="M 740 270 Q 790 200 830 160" /> <path class="route" d="M 830 160 Q 860 130 890 120" /> <path class="route" d="M 740 270 Q 820 320 870 380" /> <path class="route" d="M 530 130 Q 630 290 740 270" /> <path class="route" d="M 530 390 Q 640 360 740 270" /> </g>
+
+  <g>
+    <circle cx="120" cy="140" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="100" y="130" class="label">Los Ángeles</text>
+
+    <circle cx="270" cy="110" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="260" y="100" class="label">Nueva York</text>
+
+    <circle cx="220" cy="220" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="165" y="235" class="label">Panamá</text>
+
+    <circle cx="310" cy="340" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="320" y="345" class="label">Santos</text>
+
+    <circle cx="480" cy="80" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="470" y="70" class="label">Rotterdam</text>
+
+    <circle cx="530" cy="130" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="540" y="125" class="label">Suez</text>
+
+    <circle cx="530" cy="390" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="540" y="400" class="label">Ciudad del Cabo</text>
+
+    <circle cx="610" cy="180" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="600" y="170" class="label">Dubái</text>
+
+    <circle cx="740" cy="270" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="735" y="290" class="label">Singapur</text>
+
+    <circle cx="830" cy="160" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="840" y="165" class="label">Shanghái</text>
+
+    <circle cx="890" cy="120" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="895" y="115" class="label">Tokio</text>
+
+    <circle cx="870" cy="380" r="4" class="node node-pulse" filter="url(#glow)"/>
+    <text x="880" y="385" class="label">Sídney</text>
+  </g>
+</svg>

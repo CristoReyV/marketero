@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Isotanques | ROTERO</title>
+  <link rel="icon" type="image/png" href="assets/favicon-rotero.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    /* Usando main.css para estilos globales */
+
+    /* Tarjetas glass claras (como servicios) */
+    .glass-card {
+      background: radial-gradient(140% 120% at 0% 0%, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, .08) 40%, rgba(255, 255, 255, .04) 70%, transparent 100%),
+        rgba(16, 20, 32, .45);
+      backdrop-filter: blur(14px) saturate(160%);
+      -webkit-backdrop-filter: blur(14px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, .14);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 10px 30px rgba(0, 0, 0, .35);
+    }
+
+    /* Botón brillante */
+    @property --gradient-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false
+    }
+
+    .shiny {
+      position: relative;
+      overflow: hidden;
+      border-radius: 9999px;
+      padding: .65rem 1.25rem;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: #fff;
+      isolation: isolate;
+      background: linear-gradient(#000, #000) padding-box,
+        conic-gradient(from var(--gradient-angle),
+          transparent 0%, #3b82f6 8%, #8b8bff 18%, #22d3ee 32%, transparent 44%) border-box;
+      border: 1px solid transparent;
+      box-shadow: inset 0 0 0 1px #1a1818;
+      text-transform: uppercase;
+      animation: spin 2.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        --gradient-angle: 360deg
+      }
+    }
+
+    /* Chip “ESPECIALIDAD” */
+    .flag {
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
+      background: linear-gradient(180deg, #111827cc, #0b1220cc);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, .18);
+      font-size: .65rem;
+      padding: .25rem .5rem;
+      border-radius: .5rem;
+      letter-spacing: .06em;
+    }
+
+    /* Imagen de tarjeta */
+    .iso-img {
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: center
+    }
+  </style>
+</head>
+
+<body class="antialiased text-slate-300">
+
+  <!-- Fondo con mapa global -->
+  <div class="fixed inset-0 -z-10">
+    <img src="assets/mapaglobal.webp" alt="Mapa global"
+      class="w-full h-full object-cover object-center select-none pointer-events-none" />
+    <div class="absolute inset-0 bg-slate-900/60"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/20 to-transparent"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="fixed top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50">
+    <div class="glass-premium rounded-full px-6 py-3 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="inline-flex items-center gap-2 font-semibold tracking-wide">
+        <img src="assets/ROTERO SVG.svg" alt="ROTERO" class="h-12 w-auto object-contain select-none" />
+      </a>
+
+      <!-- Menú desktop -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-neutral-300">
+        <a href="index.html" class="hover:text-white transition">Inicio</a>
+        <a href="servicios.html" class="hover:text-white transition">Servicios</a>
+        <a href="isotanques.html" class="text-white">Isotanques</a>
+        <a href="unidades.html" class="hover:text-white transition">Unidades</a>
+        <a href="nosotros.html" class="hover:text-white transition">Nosotros</a>
+        <a href="tienda.html" class="hover:text-white transition">Tienda</a>
+      </div>
+
+      <!-- CTA + botón móvil -->
+      <div class="flex items-center gap-3">
+        <a href="mailto:cotizaciones@logistica-rotero.com"
+          class="shiny-cta-premium inline-flex items-center gap-1 text-xs">
+          <span>Cotizar</span><i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </a>
+
+        <!-- Botón menú móvil -->
+        <button id="mobile-menu-toggle"
+          class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-white/30 text-neutral-100 hover:border-emerald-400 hover:text-emerald-300 transition"
+          aria-label="Abrir menú de navegación">
+          <i data-lucide="menu" class="w-5 h-5"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel menú móvil -->
+    <div id="mobile-menu" class="md:hidden mt-3 hidden">
+      <div class="nav-glass rounded-3xl px-5 py-4 text-sm text-neutral-100">
+        <nav class="flex flex-col gap-1">
+          <a href="index.html" class="py-2 border-b border-white/10 hover:text-white transition">Inicio</a>
+          <a href="servicios.html" class="py-2 border-b border-white/10 hover:text-white transition">Servicios</a>
+          <a href="isotanques.html" class="py-2 border-b border-white/10 text-white transition">Isotanques</a>
+          <a href="unidades.html" class="py-2 border-b border-white/10 hover:text-white transition">Unidades</a>
+          <a href="nosotros.html" class="py-2 border-b border-white/10 hover:text-white transition">Nosotros</a>
+          <a href="tienda.html" class="py-2 border-b border-white/10 hover:text-white transition">Tienda</a>
+
+          <a href="mailto:cotizaciones@logistica-rotero.com"
+            class="mt-3 inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-sky-500 text-white font-medium hover:bg-sky-400 transition">
+            Cotizar por correo
+            <i data-lucide="mail" class="w-4 h-4"></i>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-40 pb-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-white font-outfit">
+        Operación de Isotanques
+      </h1>
+      <p class="mt-4 text-slate-300 max-w-3xl">
+        Transporte y manejo de líquidos a granel y químicos con seguridad total: traslados puerto–planta,
+        patios autorizados, heating, cleaning y pruebas de integridad.
+      </p>
+    </div>
+  </header>
+
+  <!-- Capacidades / highlights -->
+  <section class="pb-10">
+    <div class="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-5 h-5"></i> Seguridad HazMat
+        </h3>
+        <p class="text-sm text-slate-300">
+          Protocolos HazMat, maniobras certificadas y capacitación continua para materiales peligrosos.
+        </p>
+      </article>
+
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="map-pin" class="w-5 h-5"></i> Puerto–Planta
+        </h3>
+        <p class="text-sm text-slate-300">
+          Conexiones en puertos clave: Manzanillo, Lázaro Cárdenas, Veracruz y Altamira. Coordinación 24/7.
+        </p>
+      </article>
+
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="thermometer" class="w-5 h-5"></i> Heating & Cleaning
+        </h3>
+        <p class="text-sm text-slate-300">
+          Red de patios con servicio de calentamiento, limpieza y pruebas para entrega en especificación.
+        </p>
+      </article>
+
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="factory" class="w-5 h-5"></i> Patios Autorizados
+        </h3>
+        <p class="text-sm text-slate-300">
+          Resguardo seguro, maniobras especializadas y monitoreo en tiempo real de la operación.
+        </p>
+      </article>
+
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="truck" class="w-5 h-5"></i> Flota Especializada
+        </h3>
+        <p class="text-sm text-slate-300">
+          Chasises portatanque y tractos configurados para cargas peligrosas y sobre-especificación.
+        </p>
+      </article>
+
+      <article class="glass-card rounded-xl p-6">
+        <h3 class="text-white font-semibold mb-2 flex items-center gap-2">
+          <i data-lucide="check-circle-2" class="w-5 h-5"></i> Cumplimiento & QA
+        </h3>
+        <p class="text-sm text-slate-300">
+          Trazabilidad, control documental y aseguramiento de calidad para auditorías y normativas.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- NUEVA SECCIÓN: Flujo operativo en 3 pasos -->
+  <section class="pb-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-2xl md:text-3xl font-semibold text-white mb-6">Flujo operativo en 3 pasos</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 items-stretch">
+        <!-- Paso 1 -->
+        <article class="glass-card rounded-xl p-6 flex flex-col">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-500/20 text-sky-300">
+              <i data-lucide="ship" class="w-5 h-5"></i>
+            </span>
+            <h3 class="text-white font-semibold">Puerto</h3>
+          </div>
+          <p class="text-sm text-slate-300 mt-3">
+            Coordinación de arribo, liberación y pick-up de isotanques. Control documental, inspecciones
+            y programación de salida hacia patios externos o planta según la ventana operativa.
+          </p>
+          <div class="mt-4 text-xs text-slate-400 space-y-1">
+            <p>• Puertos: Manzanillo, Lázaro Cárdenas, Veracruz, Altamira.</p>
+            <p>• Trazabilidad y avisos en tiempo real 24/7.</p>
+          </div>
+        </article>
+
+        <!-- Paso 2 -->
+        <article class="glass-card rounded-xl p-6 flex flex-col">
+          <div class="flex items-center gap-3">
+            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-amber-500/20 text-amber-300">
+              <i data-lucide="factory" class="w-5 h-5"></i>
+            </span>
+            <h3 class="text-white font-semibold">Patios externos</h3>
+          </div>
+          <p class="text-sm text-slate-300 mt-3">
+            Resguardo y servicios: <em>heating</em>, <em>cleaning</em>, pruebas de estanqueidad e integridad,
+            así como maniobras especializadas y conexión a tierra en descarga.
+          </p>
+          <div class="mt-4 text-xs text-slate-400 space-y-1">
+            <p>• Programación por turnos y cumplimiento HazMat.</p>
+            <p>• Control de temperatura y liberación QA.</p>
+          </div>
+        </article>
+
+        <!-- Paso 3 -->
+        <article class="glass-card rounded-xl p-6 flex flex-col">
+          <div class="flex items-center gap-3">
+            <span
+              class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-300">
+              <i data-lucide="building-2" class="w-5 h-5"></i>
+            </span>
+            <h3 class="text-white font-semibold">Planta</h3>
+          </div>
+          <p class="text-sm text-slate-300 mt-3">
+            Entrega en especificación mediante chasis porta-isotanques y tractos dedicados.
+            Conexión segura, descarga y retorno, con documentación y cierre de viaje.
+          </p>
+          <div class="mt-4 text-xs text-slate-400 space-y-1">
+            <p>• Reporte de cierre, sellos y evidencias.</p>
+            <p>• Plan de retorno o reposicionamiento.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tipos de isotanques -->
+  <section class="pb-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-end justify-between mb-6">
+        <h2 class="text-2xl md:text-3xl font-semibold text-white">Tipos de Isotanques</h2>
+        <a href="mailto:cotizaciones@logistica-rotero.com?subject=Solicitud%20de%20ficha%20t%C3%A9cnica%20de%20isotanques&body=Hola%2C%20quisiera%20recibir%20la%20ficha%20t%C3%A9cnica%20de%20sus%20isotanques.%0A%0ANombre%3A%0AEmpresa%3A%0ATel%C3%A9fono%3A%0AProducto%20o%20qu%C3%ADmico%3A"
+          class="shiny inline-flex items-center gap-1">
+          <span>Solicitar ficha</span>
+          <i data-lucide="file-text" class="w-3 h-3"></i>
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- T11 -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <span class="flag">ESPECIALIDAD</span>
+            <img class="iso-img w-full" src="assets/isotanks/t11.webp" alt="Isotanque T11">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="beaker" class="w-5 h-5"></i> T11 Químico estándar
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              21–26&nbsp;m³, presión 4 bar. Químicos a granel no extremadamente corrosivos.
+              Opciones con serpentín de heating y válvulas top/bottom.
+            </p>
+            <ul class="mt-3 text-sm text-slate-300 space-y-1">
+              <li>• Cargas típicas: solventes, alcoholes, aceites.</li>
+              <li>• Puerto–planta–destino con rastreo 24/7.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- T14 -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <span class="flag">ESPECIALIDAD</span>
+            <img class="iso-img w-full" src="assets/isotanks/t14.webp" alt="Isotanque T14">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="flame" class="w-5 h-5"></i> T14 Alta peligrosidad
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              21–25&nbsp;m³, presión 4–6 bar. Para corrosivos/ tóxicos con
+              mayores requisitos de seguridad y válvulas reforzadas.
+            </p>
+            <ul class="mt-3 text-sm text-slate-300 space-y-1">
+              <li>• Cargas: ácidos, isocianatos, aminas.</li>
+              <li>• Protocolos HazMat y EPP especializado.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- T20/T22 -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/t20.webp" alt="Isotanque T20/T22">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="test-tube" class="w-5 h-5"></i> T20 / T22 Corrosivos
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              19–24&nbsp;m³, presión 6–8 bar. Diseñados para mayor presión y compatibilidad
+              con productos agresivos.
+            </p>
+            <ul class="mt-3 text-sm text-slate-300 space-y-1">
+              <li>• Materiales y sellos de alta resistencia química.</li>
+              <li>• Opción de recubrimientos internos.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- T50 gases -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <span class="flag">ESPECIALIDAD</span>
+            <img class="iso-img w-full" src="assets/isotanks/t50-gas.webp" alt="Isotanque T50 Gases">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="wind" class="w-5 h-5"></i> T50 Gases licuados
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Para LPG, amoníaco, butadieno, cloro (según configuración). Presión alta
+              con dispositivos de alivio y válvulas de seguridad.
+            </p>
+            <ul class="mt-3 text-sm text-slate-300 space-y-1">
+              <li>• Maniobra y documentación especializada.</li>
+              <li>• Monitoreo de presión/temperatura.</li>
+            </ul>
+          </div>
+        </article>
+
+        <!-- T75 criogénico -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <span class="flag">ESPECIALIDAD</span>
+            <img class="iso-img w-full" src="assets/isotanks/t75-cryogenic.webp" alt="Isotanque T75 criogénico">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="snowflake" class="w-5 h-5"></i> T75 Criogénico
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Doble pared y super-aislamiento para LIN, LOX, LCO₂, LNG, N₂O.
+              Control de boil-off y válvulas criogénicas.
+            </p>
+          </div>
+        </article>
+
+        <!-- Food-grade -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/foodgrade.webp" alt="Isotanque grado alimenticio">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="coffee" class="w-5 h-5"></i> Grado alimenticio (Food-grade)
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              T11 con protocolos sanitarios, sellos y limpieza certificada para
+              aceites, jarabes, alcoholes y food-grade.
+            </p>
+          </div>
+        </article>
+
+        <!-- Rubber/Epoxy lined -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/rubberlined.webp" alt="Isotanque con recubrimiento">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="shield" class="w-5 h-5"></i> Recubrimiento interno
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Epóxico o hule (rubber lined) para compatibilidad con químicos agresivos y
+              protección anticorrosiva.
+            </p>
+          </div>
+        </article>
+
+        <!-- Baffled -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/baffled.webp" alt="Isotanque baffled">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="waves" class="w-5 h-5"></i> Baffled (antioleaje)
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Con tabiques internos que reducen el movimiento del líquido para seguridad y estabilidad.
+            </p>
+          </div>
+        </article>
+
+        <!-- Swap body -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/swapbody.webp" alt="Swap body 30–35 m3">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="expand" class="w-5 h-5"></i> Swap-Body 30–35 m³
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Mayor capacidad (principalmente Europa). Ideal para productos no peligrosos o de baja presión.
+            </p>
+          </div>
+        </article>
+
+        <!-- Reefer / Heat maintained -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/reefer.webp" alt="Isotanque con control térmico">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="thermometer-snowflake" class="w-5 h-5"></i> Control térmico
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Sistemas de mantenimiento de temperatura (heating/refrigerado) para productos sensibles.
+            </p>
+          </div>
+        </article>
+
+        <!-- Bitumen / Asphalt -->
+        <article class="glass-card rounded-xl overflow-hidden">
+          <div class="relative">
+            <img class="iso-img w-full" src="assets/isotanks/bitutainer.webp" alt="Bitutainer / Asfalto">
+          </div>
+          <div class="p-5">
+            <h3 class="text-white font-semibold text-lg flex items-center gap-2">
+              <i data-lucide="droplet" class="w-5 h-5"></i> Bitumen / Asfalto
+            </h3>
+            <p class="text-sm mt-2 text-slate-300">
+              Tanques especiales con aislamiento y sistemas de calentamiento para asfalto y derivados.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Inicializar íconos Lucide
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+
+      // Scroll Reveal Observer
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('section, article, header').forEach(el => {
+        el.classList.add('reveal');
+        observer.observe(el);
+      });
+
+      // Toggle menú móvil
+      const toggle = document.getElementById('mobile-menu-toggle');
+      const menu = document.getElementById('mobile-menu');
+      if (toggle && menu) {
+        toggle.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+        });
+      }
+    });
+  </script>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div class="col-span-1">
+          <span class="text-white text-lg font-semibold tracking-tighter uppercase block mb-4">ROTERO</span>
+          <p class="text-xs leading-relaxed max-w-xs">Soluciones logísticas integrales. Conectando negocios con el mundo
+            a través de servicios de transporte seguros y eficientes.</p>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Servicios</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="isotanques.html" class="hover:text-white transition">Isotanques</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">Carga General</a></li>
+            <li><a href="servicios.html" class="hover:text-white transition">HazMat</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Empresa</h3>
+          <ul class="space-y-2 text-sm">
+            <li><a href="nosotros.html" class="hover:text-white transition">Nosotros</a></li>
+            <li><a href="unidades.html" class="hover:text-white transition">Flota</a></li>
+            <li><a href="tienda.html" class="hover:text-white transition text-blue-400">Tienda</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-medium text-white tracking-wider uppercase mb-4">Síguenos</h3>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/WLSRotero/" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+            <a href="https://instagram.com/logistica_rotero" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+            <a href="https://x.com/WROTERO" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+            <a href="https://www.linkedin.com/in/worlds-logistic-solutions-rotero-b3693b2b7" target="_blank" rel="noopener noreferrer" class="hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-xs">© 2026 ROTERO Logistics Solutions. Todos los derechos reservados.</p>
+        <div class="flex gap-6">
+          <a href="aviso-privacidad.html" class="text-xs hover:text-white transition">Aviso de Privacidad</a>
+          <a href="terminos-condiciones.html" class="text-xs hover:text-white transition">Términos y Condiciones</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>

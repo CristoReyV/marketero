@@ -130,13 +130,7 @@ export function Hero() {
         </div>
 
         {/* Stats */}
-        <div className="reveal" style={{
-          display: 'flex',
-          gap: '2.5rem',
-          flexWrap: 'wrap',
-          paddingTop: '2rem',
-          borderTop: '1px solid var(--border)'
-        }}>
+        <div className="reveal hero-stats">
           {[
             { num: '8+', label: 'Sectores atendidos' },
             { num: '5,000+', label: 'Productos disponibles' },
@@ -313,8 +307,8 @@ export function WhyMarketero() {
         pointerEvents: 'none'
       }} />
       <div className="container" style={{ position: 'relative' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '5rem', alignItems: 'start' }}>
-          <div className="reveal" style={{ position: 'sticky', top: '100px' }}>
+        <div className="why-grid">
+          <div className="reveal why-sticky">
             <span className="section-tag">Propuesta de Valor</span>
             <h2 className="section-title" style={{ textAlign: 'left' }}>
               ¿Por qué elegir <span className="gradient-text">MARKETERO</span>?
@@ -389,8 +383,8 @@ export function HowItWorks() {
           gap: '0',
           position: 'relative'
         }}>
-          {/* Connecting line */}
-          <div style={{
+          {/* Connecting line — hidden on mobile via CSS */}
+          <div className="how-connector" style={{
             position: 'absolute',
             top: '36px',
             left: '12.5%',

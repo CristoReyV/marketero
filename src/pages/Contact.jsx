@@ -51,7 +51,7 @@ export default function Contact() {
         </div>
       </div>
 
-      <div className="container" style={{ padding: '3rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '4rem', alignItems: 'start' }}>
+      <div className="container contact-layout">
         {/* Info lateral */}
         <div>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
@@ -100,11 +100,11 @@ export default function Contact() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="contact-form-row">
                 <CF label="Empresa" id="c-empresa" value={form.empresa} error={errors.empresa} onChange={v => handle('empresa', v)} placeholder="Nombre de tu empresa" />
                 <CF label="Nombre" id="c-nombre" value={form.nombre} error={errors.nombre} onChange={v => handle('nombre', v)} placeholder="Tu nombre" />
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              <div className="contact-form-row">
                 <CF label="Correo" id="c-correo" type="email" value={form.correo} error={errors.correo} onChange={v => handle('correo', v)} placeholder="correo@empresa.com" />
                 <CF label="Teléfono" id="c-telefono" value={form.telefono} error={errors.telefono} onChange={v => handle('telefono', v)} placeholder="+52 747 000 0000" />
               </div>

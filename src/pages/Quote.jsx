@@ -1,46 +1,40 @@
-import { useState } from 'react';
+// ─────────────────────────────────────────────────────────────────────
+// Quote.jsx — Página "Mi Cotización"
+// Orquesta el listado de productos y el formulario QuoteForm.
+// QuoteForm se carga de forma lazy para evitar descargar el chunk
+// pesado de country-state-city en la carga inicial de la app.
+// ─────────────────────────────────────────────────────────────────────
+import { useState, lazy, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuote } from '../context/QuoteContext';
-import { sendQuoteRequest } from '../utils/emailService';
 
-const SECTORS_GIRO = ['Salud y Laboratorio','Construcción','Industria','Oficinas y Corporativos','Limpieza e Higiene','Ferretería','Refrigeración y Cadena de Frío','Alimentos y Bebidas','Gobierno e Instituciones','Educación','Otro'];
+// Carga diferida — el chunk location-vendor (~8MB) solo se descarga
+// cuando el usuario navega a esta página.
+const QuoteForm = lazy(() => import('../components/QuoteForm'));
+
+function FormSkeleton() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', animation: 'pulse 1.5s ease infinite' }}>
+      {[...Array(6)].map((_, i) => (
+        <div key={i} style={{ height: '46px', background: 'rgba(255,255,255,0.04)', borderRadius: '8px', border: '1px solid var(--border)' }} />
+      ))}
+      <div style={{ height: '46px', background: 'rgba(10,107,255,0.15)', borderRadius: '8px' }} />
+    </div>
+  );
+}
 
 export default function Quote() {
   const { items, removeItem, updateQuantity, updateComment, clearQuote } = useQuote();
-  const [form, setForm] = useState({ nombre: '', empresa: '', correo: '', telefono: '', ciudad: '', giro: '', mensaje: '' });
-  const [status, setStatus] = useState('idle'); // idle | sending | success | error
-  const [errors, setErrors] = useState({});
+  const [successEmail, setSuccessEmail] = useState(null);
 
-  const validate = () => {
-    const e = {};
-    if (!form.nombre.trim()) e.nombre = 'Requerido';
-    if (!form.empresa.trim()) e.empresa = 'Requerido';
-    if (!form.correo.trim() || !/\S+@\S+\.\S+/.test(form.correo)) e.correo = 'Correo inválido';
-    if (!form.telefono.trim()) e.telefono = 'Requerido';
-    if (!form.giro) e.giro = 'Requerido';
-    return e;
+  const handleSuccess = (email) => {
+    setSuccessEmail(email);
+    clearQuote();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const errs = validate();
-    if (Object.keys(errs).length) { setErrors(errs); return; }
-    setStatus('sending');
-    try {
-      await sendQuoteRequest({ formData: form, quoteItems: items });
-      setStatus('success');
-      clearQuote();
-    } catch {
-      setStatus('error');
-    }
-  };
-
-  const handleChange = (field, val) => {
-    setForm(p => ({ ...p, [field]: val }));
-    if (errors[field]) setErrors(p => ({ ...p, [field]: undefined }));
-  };
-
-  if (status === 'success') {
+  // ── Pantalla de éxito ──────────────────────────────────────────────
+  if (successEmail) {
     return (
       <div className="page-enter" style={{ paddingTop: '70px', minHeight: '100vh', background: 'var(--bg-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <div style={{ textAlign: 'center', maxWidth: '480px', padding: '3rem 2rem' }}>
@@ -52,7 +46,7 @@ export default function Quote() {
             Tu solicitud de cotización ha sido recibida. Nuestro equipo revisará tu requerimiento y te enviará una propuesta comercial personalizada en menos de <strong style={{ color: 'var(--accent-cyan)' }}>48 horas hábiles</strong>.
           </p>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '2.5rem' }}>
-            Revisa tu correo: <strong>{form.correo}</strong>
+            Revisa tu correo: <strong>{successEmail}</strong>
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/catalogo" className="btn btn-primary">Ver más productos</Link>
@@ -79,7 +73,8 @@ export default function Quote() {
       </div>
 
       <div className="container" style={{ padding: '2.5rem 1.5rem' }}>
-        {items.length === 0 && status !== 'success' ? (
+        {items.length === 0 ? (
+          /* ── Cotización vacía ── */
           <div className="empty-state" style={{ paddingTop: '6rem' }}>
             <div className="empty-state-icon">📋</div>
             <h3>Tu cotización está vacía</h3>
@@ -90,14 +85,18 @@ export default function Quote() {
             </Link>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 420px', gap: '2.5rem', alignItems: 'start' }}>
-            {/* Products list */}
+          /* ── Layout principal ── */
+          <div className="quote-layout">
+
+            {/* Columna izquierda: Productos */}
             <div>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
                 <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
                   Productos seleccionados ({items.length})
                 </h2>
-                <button onClick={clearQuote} style={{ fontSize: '0.8rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
+                <button
+                  onClick={clearQuote}
+                  style={{ fontSize: '0.8rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
                   onMouseEnter={e => e.target.style.color = '#ff6b6b'}
                   onMouseLeave={e => e.target.style.color = 'var(--text-muted)'}
                 >Limpiar todo</button>
@@ -105,10 +104,17 @@ export default function Quote() {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {items.map(item => (
-                  <QuoteItemRow key={item.id} item={item} onRemove={removeItem} onQty={updateQuantity} onComment={updateComment} />
+                  <QuoteItemRow
+                    key={item.id}
+                    item={item}
+                    onRemove={removeItem}
+                    onQty={updateQuantity}
+                    onComment={updateComment}
+                  />
                 ))}
               </div>
 
+              {/* Aviso B2B */}
               <div style={{ marginTop: '1.5rem', padding: '1.25rem', background: 'rgba(0,212,255,0.05)', border: '1px solid rgba(0,212,255,0.15)', borderRadius: 'var(--radius-sm)' }}>
                 <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.6 }}>
                   ℹ️ Esta solicitud <strong style={{ color: 'var(--text-primary)' }}>no implica ningún pago ni compromiso de compra</strong>. Recibirás una propuesta comercial formal con precios, tiempos y condiciones.
@@ -116,110 +122,52 @@ export default function Quote() {
               </div>
             </div>
 
-            {/* Form */}
-            <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '2rem', position: 'sticky', top: '90px' }}>
+            {/* Columna derecha: Formulario */}
+            <div className="quote-form-col">
               <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>
                 Datos empresariales
               </h2>
               <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                 Completa tu información para recibir la propuesta.
               </p>
-
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <FormField label="Nombre completo" id="q-nombre" value={form.nombre} error={errors.nombre}
-                  onChange={v => handleChange('nombre', v)} placeholder="Tu nombre completo" />
-                <FormField label="Empresa / Organización" id="q-empresa" value={form.empresa} error={errors.empresa}
-                  onChange={v => handleChange('empresa', v)} placeholder="Nombre de tu empresa" />
-                <FormField label="Correo electrónico" id="q-correo" type="email" value={form.correo} error={errors.correo}
-                  onChange={v => handleChange('correo', v)} placeholder="correo@empresa.com" />
-                <FormField label="Teléfono" id="q-telefono" value={form.telefono} error={errors.telefono}
-                  onChange={v => handleChange('telefono', v)} placeholder="+52 747 000 0000" />
-                <FormField label="Ciudad / Estado" id="q-ciudad" value={form.ciudad}
-                  onChange={v => handleChange('ciudad', v)} placeholder="Ciudad de México" />
-
-                {/* Giro select */}
-                <div className="form-group">
-                  <label htmlFor="q-giro">Giro de la empresa {errors.giro && <span style={{ color: '#ff6b6b', fontSize: '0.75rem' }}>— {errors.giro}</span>}</label>
-                  <select id="q-giro" value={form.giro} onChange={e => handleChange('giro', e.target.value)} style={{ borderColor: errors.giro ? '#ff6b6b' : undefined }}>
-                    <option value="" disabled>Selecciona tu giro</option>
-                    {SECTORS_GIRO.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                </div>
-
-                {/* Mensaje */}
-                <div className="form-group">
-                  <label htmlFor="q-mensaje">Requerimiento adicional (opcional)</label>
-                  <textarea id="q-mensaje" rows={3} value={form.mensaje} onChange={e => handleChange('mensaje', e.target.value)}
-                    placeholder="Especificaciones adicionales, volúmenes, urgencia..." />
-                </div>
-
-                {status === 'error' && (
-                  <p style={{ fontSize: '0.82rem', color: '#ff6b6b', background: 'rgba(255,107,107,0.08)', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(255,107,107,0.2)' }}>
-                    Error al enviar. Por favor intenta de nuevo o escríbenos directamente.
-                  </p>
-                )}
-
-                <button type="submit" className="btn btn-primary btn-lg btn-full" id="quote-submit-btn" disabled={status === 'sending'}>
-                  {status === 'sending' ? (
-                    <>
-                      <span style={{ display: 'inline-block', width: '16px', height: '16px', border: '2px solid rgba(255,255,255,0.3)', borderTopColor: '#fff', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
-                      Enviando solicitud...
-                    </>
-                  ) : (
-                    <>
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 3L8 10M15 3l-5 12-2-5-5-2 12-5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                      Enviar solicitud de cotización
-                    </>
-                  )}
-                </button>
-              </form>
+              <Suspense fallback={<FormSkeleton />}>
+                <QuoteForm items={items} onSuccess={handleSuccess} />
+              </Suspense>
             </div>
           </div>
         )}
       </div>
+
+
     </div>
   );
 }
 
-// ── Quote Item Row ──────────────────────────────────────────────────
+// ── QuoteItemRow ──────────────────────────────────────────────────────
 function QuoteItemRow({ item, onRemove, onQty, onComment }) {
   const [showComment, setShowComment] = useState(false);
 
   return (
-    <div style={{
-      background: 'var(--bg-secondary)',
-      border: '1px solid var(--border)',
-      borderRadius: 'var(--radius-md)',
-      padding: '1.25rem',
-      transition: 'border-color 0.2s'
-    }}>
+    <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)', padding: '1.25rem', transition: 'border-color 0.2s' }}>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
-        {/* Emoji icon */}
-        <div style={{
-          width: '56px', height: '56px', flexShrink: 0,
-          background: 'linear-gradient(135deg, rgba(10,107,255,0.1), rgba(0,212,255,0.05))',
-          border: '1px solid var(--border)',
-          borderRadius: 'var(--radius-sm)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.6rem'
-        }}>
+        <div style={{ width: '56px', height: '56px', flexShrink: 0, background: 'linear-gradient(135deg, rgba(10,107,255,0.1), rgba(0,212,255,0.05))', border: '1px solid var(--border)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem' }}>
           {getCategoryEmoji(item.category)}
         </div>
-
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.5rem' }}>
             <div>
               <p style={{ fontFamily: 'var(--font-display)', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.2rem' }}>{item.name}</p>
               <span className="badge-category">{item.category}</span>
             </div>
-            <button onClick={() => onRemove(item.id)} style={{ color: 'var(--text-muted)', fontSize: '1.3rem', flexShrink: 0, lineHeight: 1, padding: '0.2rem', transition: 'color 0.2s' }}
+            <button
+              onClick={() => onRemove(item.id)}
+              style={{ color: 'var(--text-muted)', fontSize: '1.3rem', flexShrink: 0, lineHeight: 1, padding: '0.2rem', transition: 'color 0.2s' }}
               onMouseEnter={e => e.target.style.color = '#ff6b6b'}
               onMouseLeave={e => e.target.style.color = 'var(--text-muted)'}
               aria-label="Eliminar producto"
             >×</button>
           </div>
 
-          {/* Quantity */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.75rem', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontWeight: 500 }}>Cantidad:</span>
@@ -267,18 +215,4 @@ function getCategoryEmoji(category) {
     'Equipamiento Industrial':'⚙️','Alimentos y Bebidas':'🍽️','Consumibles Empresariales':'📦',
   };
   return map[category] || '📦';
-}
-
-// ── Form Field Helper ──────────────────────────────────────────────
-function FormField({ label, id, value, onChange, error, placeholder, type = 'text' }) {
-  return (
-    <div className="form-group">
-      <label htmlFor={id}>{label} {error && <span style={{ color: '#ff6b6b', fontSize: '0.75rem' }}>— {error}</span>}</label>
-      <input
-        id={id} type={type} value={value} placeholder={placeholder}
-        onChange={e => onChange(e.target.value)}
-        style={{ borderColor: error ? '#ff6b6b' : undefined }}
-      />
-    </div>
-  );
 }
