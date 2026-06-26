@@ -4,6 +4,23 @@
    Aplicado globalmente encima de index.css
 ═══════════════════════════════════════════════════════════════════ */
 
+/* ── Hero section ────────────────────────────────────────────────── */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.hero-text-col {
+  max-width: 100%;
+}
+.hero-carousel-col {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ── Catalog page ────────────────────────────────────────────────── */
 .catalog-layout {
   display: grid;

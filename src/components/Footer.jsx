@@ -96,10 +96,10 @@ export default function Footer() {
             </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               <li>
-                <a href="mailto:contacto@markketero.com" style={{ fontSize: '0.88rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
+                <a href="mailto:markketero@outlook.com" style={{ fontSize: '0.88rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
                   onMouseEnter={e => e.target.style.color = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.target.style.color = 'var(--text-muted)'}
-                >contacto@markketero.com</a>
+                >markketero@outlook.com</a>
               </li>
               <li>
                 <a href="tel:+527470000000" style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>+52 747 000 0000</a>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 // ── Particles Canvas background ──────────────────────────────────
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 function ParticlesCanvas() {
   const canvasRef = useRef(null);
@@ -44,7 +44,23 @@ function ParticlesCanvas() {
 }
 
 // ── Hero Section ─────────────────────────────────────────────────
+const heroImages = [
+  { src: '/images/hero-1.webp', alt: 'Isotanque T-11' },
+  { src: '/images/hero-2.webp', alt: 'Montacargas de Combustión' },
+  { src: '/images/hero-3.webp', alt: 'Tarima Plástica Industrial' },
+  { src: '/images/hero-4.webp', alt: 'Cisterna' },
+];
+
 export function Hero() {
+  const [currentImg, setCurrentImg] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImg((prev) => (prev + 1) % heroImages.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section style={{
       position: 'relative',
@@ -58,90 +74,138 @@ export function Hero() {
       <ParticlesCanvas />
       <div className="grid-bg" />
 
-      {/* Glow blob */}
+      {/* Glow blob central (moved to right) */}
       <div style={{
-        position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)',
-        width: '600px', height: '400px',
-        background: 'radial-gradient(ellipse, rgba(10,107,255,0.12) 0%, transparent 70%)',
+        position: 'absolute', top: '50%', right: '10%', transform: 'translateY(-50%)',
+        width: '600px', height: '600px',
+        background: 'radial-gradient(ellipse, rgba(10,107,255,0.15) 0%, transparent 70%)',
         pointerEvents: 'none'
       }} />
 
       <div className="container" style={{ position: 'relative', zIndex: 1, padding: '6rem 1.5rem' }}>
-        {/* Logo */}
-        <div className="reveal" style={{ marginBottom: '2.5rem' }}>
-          <img
-            src="/logo-fondo-negro.png"
-            alt="Markketero Logo"
-            style={{
-              height: '90px',
-              width: 'auto',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 0 28px rgba(10,107,255,0.55)) drop-shadow(0 0 8px rgba(0,212,255,0.3))',
-              animation: 'float 4s ease-in-out infinite',
-              display: 'block'
-            }}
-          />
-        </div>
-
-        {/* Badge */}
-        <div className="reveal" style={{ marginBottom: '1.5rem' }}>
-          <span className="badge-cotizable" style={{ padding: '0.4rem 1rem', fontSize: '0.75rem' }}>
-            Plataforma B2B · Suministro Multisectorial
-          </span>
-        </div>
-
-        <h1 className="reveal" style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2.2rem, 5vw, 4rem)',
-          fontWeight: 900,
-          lineHeight: 1.1,
-          color: 'var(--text-primary)',
-          marginBottom: '1.5rem',
-          maxWidth: '780px'
-        }}>
-          Suministros empresariales para{' '}
-          <span className="gradient-text">operaciones que no pueden detenerse</span>
-        </h1>
-
-        <p className="reveal" style={{
-          fontSize: 'clamp(1rem, 2vw, 1.15rem)',
-          color: 'var(--text-secondary)',
-          lineHeight: 1.75,
-          maxWidth: '640px',
-          marginBottom: '2.5rem'
-        }}>
-          MARKKETERO conecta a empresas, industrias, oficinas, laboratorios, comercios y organizaciones con productos, insumos y soluciones de abastecimiento bajo solicitud de cotización.
-        </p>
-
-        <div className="reveal" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '4rem' }}>
-          <Link to="/cotizacion" className="btn btn-primary btn-lg" id="hero-cta-quote">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <rect x="2" y="2" width="14" height="14" rx="3" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-              <path d="M5 6h8M5 9h8M5 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-            <span>Solicitar Cotización</span>
-          </Link>
-          <Link to="/catalogo" className="btn btn-ghost btn-lg" id="hero-cta-catalog">
-            <span>Ver Catálogo</span>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </Link>
-        </div>
-
-        {/* Stats */}
-        <div className="reveal hero-stats">
-          {[
-            { num: '8+', label: 'Sectores atendidos' },
-            { num: '5,000+', label: 'Productos disponibles' },
-            { num: '<48h', label: 'Respuesta garantizada' },
-            { num: '100%', label: 'Enfoque B2B' },
-          ].map(s => (
-            <div key={s.label}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, background: 'var(--grad-brand)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{s.num}</div>
-              <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>{s.label}</div>
+        <div className="hero-layout">
+          
+          {/* Left Column (Text & CTA) */}
+          <div className="hero-text-col">
+            {/* Logo */}
+            <div className="reveal" style={{ marginBottom: '2.5rem' }}>
+              <img
+                src="/logo-fondo-negro.png"
+                alt="Markketero Logo"
+                style={{
+                  height: '80px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 0 28px rgba(10,107,255,0.4)) drop-shadow(0 0 8px rgba(0,212,255,0.2))',
+                  animation: 'float 4s ease-in-out infinite',
+                  display: 'block'
+                }}
+              />
             </div>
-          ))}
+
+            {/* Badge */}
+            <div className="reveal" style={{ marginBottom: '1.5rem' }}>
+              <span className="badge-cotizable" style={{ padding: '0.4rem 1rem', fontSize: '0.75rem' }}>
+                Plataforma B2B · Suministro Multisectorial
+              </span>
+            </div>
+
+            <h1 className="reveal" style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
+              fontWeight: 900,
+              lineHeight: 1.1,
+              color: 'var(--text-primary)',
+              marginBottom: '1.5rem',
+            }}>
+              Suministros empresariales para{' '}
+              <span className="gradient-text">operaciones que no pueden detenerse</span>
+            </h1>
+
+            <p className="reveal" style={{
+              fontSize: 'clamp(1rem, 1.5vw, 1.1rem)',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.75,
+              marginBottom: '2.5rem'
+            }}>
+              MARKKETERO conecta a empresas, industrias, oficinas, laboratorios, comercios y organizaciones con productos, insumos y soluciones de abastecimiento bajo solicitud de cotización.
+            </p>
+
+            <div className="reveal" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '4rem' }}>
+              <Link to="/cotizacion" className="btn btn-primary btn-lg" id="hero-cta-quote">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="2" width="14" height="14" rx="3" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                  <path d="M5 6h8M5 9h8M5 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+                <span>Solicitar Cotización</span>
+              </Link>
+              <Link to="/catalogo" className="btn btn-ghost btn-lg" id="hero-cta-catalog">
+                <span>Ver Catálogo</span>
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path d="M3 9h12M11 5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="reveal hero-stats" style={{ paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
+              {[
+                { num: '8+', label: 'Sectores atendidos' },
+                { num: '5,000+', label: 'Productos disponibles' },
+                { num: '<48h', label: 'Respuesta garantizada' },
+                { num: '100%', label: 'Enfoque B2B' },
+              ].map(s => (
+                <div key={s.label}>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, background: 'var(--grad-brand)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>{s.num}</div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>{s.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Column (Image Carousel) */}
+          <div className="hero-carousel-col reveal">
+            <div style={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '1 / 1',
+              maxWidth: '500px',
+              margin: '0 auto',
+            }}>
+              {/* Glass container behind images */}
+              <div style={{
+                position: 'absolute',
+                inset: '20px',
+                background: 'rgba(255,255,255,0.03)',
+                borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.05)',
+                backdropFilter: 'blur(10px)',
+                boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(10,107,255,0.1)'
+              }} />
+              
+              {heroImages.map((img, i) => (
+                <img
+                  key={i}
+                  src={img.src}
+                  alt={img.alt}
+                  style={{
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    padding: '2rem',
+                    filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.4))',
+                    transition: 'opacity 1s ease-in-out, transform 1s ease-in-out',
+                    opacity: currentImg === i ? 1 : 0,
+                    transform: currentImg === i ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
