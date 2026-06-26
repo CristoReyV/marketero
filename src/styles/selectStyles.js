@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────
-// Estilos personalizados de react-select para el tema dark de Marketero
+// Estilos personalizados de react-select para el tema dark de Markketero
 // Importar en cualquier componente que use <ReactSelect />
 // ─────────────────────────────────────────────────────────────────────
 

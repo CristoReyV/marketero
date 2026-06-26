@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// MARKETERO — Servicio de Email
+// MARKKETERO — Servicio de Email
 // ═══════════════════════════════════════════════════════════════════
 // Usa la API REST de EmailJS (no requiere librería npm).
 // Documentación: https://www.emailjs.com/docs/rest-api/send/
@@ -20,7 +20,7 @@ const EMAILJS_CONFIG = {
   TEMPLATE_QUOTE_ID:   'template_ddst5ub',   // Template para cotizaciones
   TEMPLATE_CONTACT_ID: 'YOUR_CONTACT_TEMPLATE_ID', // Template para contacto
   PUBLIC_KEY:          'JofZeUiAhHe9RxyvB',           // Tu Public Key de EmailJS
-  RECIPIENT_EMAIL:     'ventas@marketero.com.mx',    // Correo que recibe las solicitudes
+  RECIPIENT_EMAIL:     'ventas@markketero.com.mx',    // Correo que recibe las solicitudes
 };
 
 const EMAILJS_API = 'https://api.emailjs.com/api/v1.0/email/send';

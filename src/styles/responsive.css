@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   MARKETERO — Responsive Mobile Styles
+   MARKKETERO — Responsive Mobile Styles
    Breakpoints: 480px (xs), 640px (sm), 768px (md), 960px (lg), 1100px (xl)
    Aplicado globalmente encima de index.css
 ═══════════════════════════════════════════════════════════════════ */
@@ -43,7 +43,7 @@
   color: var(--accent-cyan);
 }
 
-/* ── WhyMarketero ────────────────────────────────────────────────── */
+/* ── WhyMarkketero ────────────────────────────────────────────────── */
 .why-grid {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -149,7 +149,7 @@
     top: 0;
   }
 
-  /* Why Marketero */
+  /* Why Markketero */
   .why-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;

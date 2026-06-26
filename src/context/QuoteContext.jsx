@@ -5,7 +5,7 @@ const QuoteContext = createContext(null);
 export function QuoteProvider({ children }) {
   const [items, setItems] = useState(() => {
     try {
-      const saved = localStorage.getItem('marketero_quote');
+      const saved = localStorage.getItem('markketero_quote');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -15,7 +15,7 @@ export function QuoteProvider({ children }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('marketero_quote', JSON.stringify(items));
+    localStorage.setItem('markketero_quote', JSON.stringify(items));
   }, [items]);
 
   const addItem = (product) => {

@@ -71,7 +71,7 @@ export function Hero() {
         <div className="reveal" style={{ marginBottom: '2.5rem' }}>
           <img
             src="/logo-fondo-negro.png"
-            alt="Marketero Logo"
+            alt="Markketero Logo"
             style={{
               height: '90px',
               width: 'auto',
@@ -110,7 +110,7 @@ export function Hero() {
           maxWidth: '640px',
           marginBottom: '2.5rem'
         }}>
-          MARKETERO conecta a empresas, industrias, oficinas, laboratorios, comercios y organizaciones con productos, insumos y soluciones de abastecimiento bajo solicitud de cotización.
+          MARKKETERO conecta a empresas, industrias, oficinas, laboratorios, comercios y organizaciones con productos, insumos y soluciones de abastecimiento bajo solicitud de cotización.
         </p>
 
         <div className="reveal" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', marginBottom: '4rem' }}>
@@ -288,7 +288,7 @@ export function CategoriesGrid() {
   );
 }
 
-// ── Why Marketero ─────────────────────────────────────────────────
+// ── Why Markketero ─────────────────────────────────────────────────
 const pillars = [
   { n: '01', icon: '🌐', title: 'Abastecimiento Multisectorial', desc: 'Una sola fuente de suministro para todos tus departamentos. Simplificamos tu cadena de compras.' },
   { n: '02', icon: '👤', title: 'Atención Personalizada', desc: 'Ejecutivo dedicado que conoce tu operación y anticipa tus necesidades de abastecimiento.' },
@@ -297,7 +297,7 @@ const pillars = [
   { n: '05', icon: '🔗', title: 'Gestión de Proveedores', desc: 'Acceso a red de proveedores certificados para atender pedidos de cualquier volumen y especificación.' },
 ];
 
-export function WhyMarketero() {
+export function WhyMarkketero() {
   return (
     <section style={{ padding: 'var(--section-py) 0', background: 'var(--bg-secondary)', position: 'relative', overflow: 'hidden' }}>
       <div style={{
@@ -311,7 +311,7 @@ export function WhyMarketero() {
           <div className="reveal why-sticky">
             <span className="section-tag">Propuesta de Valor</span>
             <h2 className="section-title" style={{ textAlign: 'left' }}>
-              ¿Por qué elegir <span className="gradient-text">MARKETERO</span>?
+              ¿Por qué elegir <span className="gradient-text">MARKKETERO</span>?
             </h2>
             <p className="section-subtitle" style={{ marginBottom: '2rem' }}>
               No somos un proveedor más. Somos el aliado que garantiza que tu operación nunca se detenga por falta de suministros.

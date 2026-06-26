@@ -59,7 +59,7 @@ export default function Contact() {
           </h2>
 
           {[
-            { icon: '✉️', label: 'Correo electrónico', value: 'contacto@marketero.com', href: 'mailto:contacto@marketero.com' },
+            { icon: '✉️', label: 'Correo electrónico', value: 'contacto@markketero.com', href: 'mailto:contacto@markketero.com' },
             { icon: '📞', label: 'Teléfono', value: '+52 747 000 0000', href: 'tel:+527470000000' },
             { icon: '📍', label: 'Ubicación', value: 'Ciudad de México, México', href: null },
           ].map(c => (

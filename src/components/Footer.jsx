@@ -39,7 +39,7 @@ export default function Footer() {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
-              }}>MARKETERO</span>
+              }}>MARKKETERO</span>
             </Link>
             <p style={{ fontSize: '0.82rem', color: 'var(--accent-cyan)', marginBottom: '0.75rem', fontWeight: 500 }}>
               Suministros y soluciones para empresas
@@ -96,10 +96,10 @@ export default function Footer() {
             </h4>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               <li>
-                <a href="mailto:contacto@marketero.com" style={{ fontSize: '0.88rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
+                <a href="mailto:contacto@markketero.com" style={{ fontSize: '0.88rem', color: 'var(--text-muted)', transition: 'color 0.2s' }}
                   onMouseEnter={e => e.target.style.color = 'var(--accent-cyan)'}
                   onMouseLeave={e => e.target.style.color = 'var(--text-muted)'}
-                >contacto@marketero.com</a>
+                >contacto@markketero.com</a>
               </li>
               <li>
                 <a href="tel:+527470000000" style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>+52 747 000 0000</a>
@@ -127,7 +127,7 @@ export default function Footer() {
           gap: '0.5rem'
         }}>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-            &copy; {year} MARKETERO. Todos los derechos reservados.
+            &copy; {year} MARKKETERO. Todos los derechos reservados.
           </p>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
             Suministros y Soluciones para Empresas

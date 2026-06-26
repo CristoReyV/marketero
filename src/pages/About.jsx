@@ -34,7 +34,7 @@ export default function About() {
             Somos tu <span className="gradient-text">socio estratégico</span> de suministro.
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.75, marginBottom: '2rem' }}>
-            MARKETERO nació para resolver una necesidad real de las empresas: contar con un aliado confiable que pueda abastecer múltiples categorías de productos, con respuesta rápida, atención personalizada y propuestas formales.
+            MARKKETERO nació para resolver una necesidad real de las empresas: contar con un aliado confiable que pueda abastecer múltiples categorías de productos, con respuesta rápida, atención personalizada y propuestas formales.
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <Link to="/catalogo" className="btn btn-primary btn-lg">Ver Catálogo</Link>
@@ -62,7 +62,7 @@ export default function About() {
         <div className="container">
           <div className="section-header">
             <span className="section-tag">Nuestra Propuesta</span>
-            <h2 className="section-title">Por qué <span className="gradient-text">MARKETERO</span></h2>
+            <h2 className="section-title">Por qué <span className="gradient-text">MARKKETERO</span></h2>
             <p className="section-subtitle">Cada punto refleja nuestro compromiso con quienes confían en nosotros para mantener su operación.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>

@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// MARKETERO — Utilidades de Validación y Sanitización
+// MARKKETERO — Utilidades de Validación y Sanitización
 // ═══════════════════════════════════════════════════════════════════
 
 // ── Sanitización ────────────────────────────────────────────────────

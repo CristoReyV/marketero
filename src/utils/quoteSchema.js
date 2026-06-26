@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────
-// MARKETERO — Esquema de validación Zod para el formulario de cotización
+// MARKKETERO — Esquema de validación Zod para el formulario de cotización
 // Centralizado aquí para reutilizarse en backend/CRM en el futuro.
 // ─────────────────────────────────────────────────────────────────────
 import { z } from 'zod';

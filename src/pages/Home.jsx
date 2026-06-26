@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Hero, SectorsGrid, CategoriesGrid, WhyMarketero, HowItWorks, FinalCTA } from '../components/HomeSections';
+import { Hero, SectorsGrid, CategoriesGrid, WhyMarkketero, HowItWorks, FinalCTA } from '../components/HomeSections';
 
 export default function Home() {
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Home() {
       <Hero />
       <SectorsGrid />
       <CategoriesGrid />
-      <WhyMarketero />
+      <WhyMarkketero />
       <HowItWorks />
       <FinalCTA />
     </div>
