@@ -102,7 +102,7 @@ export default function Footer() {
                 >markketero@outlook.com</a>
               </li>
               <li>
-                <a href="tel:+527470000000" style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>+52 747 000 0000</a>
+                <a href="tel:+525548670305" style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>+52 55 4867 0305</a>
               </li>
               <li>
                 <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>Ciudad de México, México</span>

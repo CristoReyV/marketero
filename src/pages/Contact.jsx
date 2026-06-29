@@ -60,7 +60,7 @@ export default function Contact() {
 
           {[
             { icon: '✉️', label: 'Correo electrónico', value: 'markketero@outlook.com', href: 'mailto:markketero@outlook.com' },
-            { icon: '📞', label: 'Teléfono', value: '+52 747 000 0000', href: 'tel:+527470000000' },
+            { icon: '📞', label: 'Teléfono', value: '+52 55 4867 0305', href: 'tel:+525548670305' },
             { icon: '📍', label: 'Ubicación', value: 'Ciudad de México, México', href: null },
           ].map(c => (
             <div key={c.label} style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', padding: '1.1rem', background: 'var(--bg-secondary)', border: '1px solid var(--border)', borderRadius: 'var(--radius-md)' }}>
@@ -106,7 +106,7 @@ export default function Contact() {
               </div>
               <div className="contact-form-row">
                 <CF label="Correo" id="c-correo" type="email" value={form.correo} error={errors.correo} onChange={v => handle('correo', v)} placeholder="correo@empresa.com" />
-                <CF label="Teléfono" id="c-telefono" value={form.telefono} error={errors.telefono} onChange={v => handle('telefono', v)} placeholder="+52 747 000 0000" />
+                <CF label="Teléfono" id="c-telefono" value={form.telefono} error={errors.telefono} onChange={v => handle('telefono', v)} placeholder="+52 55 4867 0305" />
               </div>
               <CF label="Producto o servicio requerido" id="c-producto" value={form.producto} error={errors.producto} onChange={v => handle('producto', v)} placeholder="¿Qué productos necesitas?" />
               <CF label="Cantidad estimada" id="c-cantidad" value={form.cantidad} onChange={v => handle('cantidad', v)} placeholder="Ej: 500 unidades, 2 toneladas..." />
