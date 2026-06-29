@@ -18,7 +18,103 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: stretch; /* Stretch to match left column height */
+  position: relative;
+  min-height: 500px;
+}
+
+/* ── Hero Showcase: ambient background wrapper ─────────────────── */
+.hero-showcase-wrapper {
+  position: absolute;
+  /* Shifted aggressively upwards to fill the top-right empty space */
+  top: -15rem; bottom: 3rem; left: -2rem; right: -4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* push panel to bottom */
   align-items: center;
+  padding-bottom: 2rem;
+  z-index: 1;
+}
+
+/* Background layer — fills the extended wrapper area */
+.hero-showcase-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Smoothly fade the background into the dark mode using a radial mask */
+  mask-image: radial-gradient(ellipse 65% 70% at 50% 50%, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: radial-gradient(ellipse 65% 70% at 50% 50%, rgba(0,0,0,1) 15%, rgba(0,0,0,0) 100%);
+}
+
+/* Individual category images */
+.showcase-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.7s ease;
+  filter: brightness(0.95) saturate(1.1); /* clear and visible */
+}
+
+/* Dark navy overlay to ensure text readability without hiding the image */
+.showcase-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 14, 31, 0.4) 0%,
+    rgba(5, 14, 31, 0.2) 40%,
+    rgba(5, 14, 31, 0.85) 100% /* darker at bottom where panel is */
+  );
+}
+
+/* Vignette — darkens edges */
+.showcase-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 85% 85% at 50% 50%,
+    transparent 40%,
+    rgba(5, 14, 31, 0.7) 100%
+  );
+}
+
+/* Glass panel — foreground above the background */
+.hero-showcase-panel {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 440px; /* More compact */
+  transform: translateY(2rem); /* Slight offset */
+}
+
+/* Glow aura behind the panel card */
+.showcase-glow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px; height: 280px;
+  background: radial-gradient(ellipse, rgba(10, 107, 255, 0.13) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Main glass card */
+.showcase-card {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+  backdrop-filter: blur(28px) saturate(1.2);
+  -webkit-backdrop-filter: blur(28px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 1.4rem; /* More compact padding */
+  box-shadow:
+    0 12px 50px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 0 0.5px rgba(10, 107, 255, 0.08);
 }
 
 /* ── Catalog page ────────────────────────────────────────────────── */
@@ -129,6 +225,18 @@
    BREAKPOINT: < 960px
 ═══════════════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
+  /* Hero layout */
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .hero-showcase-wrapper {
+    position: relative;
+    top: 0; left: 0; right: 0; bottom: 0;
+    min-height: 480px;
+    padding: 10px;
+  }
+
   /* Catalog: ocultar sidebar, mostrar botón de filtros */
   .catalog-layout {
     grid-template-columns: 1fr;

@@ -1,0 +1,35 @@
+name: Deploy to HostGator
+
+on:
+  push:
+    branches:
+      - main # O la rama que uses para producción, ej. "master"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Puedes ajustar la versión de Node.js si lo necesitas
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Deploy via FTP to HostGator
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/ # Carpeta generada por Vite
+          server-dir: ./ # Como tu usuario FTP ya apunta a public_html, subimos a la raíz del FTP
+          danger-action: true # Permite borrar o reemplazar archivos antiguos en el servidor

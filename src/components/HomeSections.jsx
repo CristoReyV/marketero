@@ -43,32 +43,174 @@ function ParticlesCanvas() {
   return <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', opacity: 0.6 }} />;
 }
 
-// ── Hero Section ─────────────────────────────────────────────────
-const heroImages = [
-  { src: '/images/hero-1.webp', alt: 'Isotanque T-11' },
-  { src: '/images/hero-2.webp', alt: 'Montacargas de Combustión' },
-  { src: '/images/hero-3.webp', alt: 'Tarima Plástica Industrial' },
-  { src: '/images/hero-4.webp', alt: 'Cisterna' },
+// ── Hero Supply Showcase ──────────────────────────────────────────────
+const showcaseCategories = [
+  { icon: '🩺', label: 'Material Médico',      color: 'rgba(0,212,255,0.18)',   border: 'rgba(0,212,255,0.35)',   img: '/images/cat-medico.png' },
+  { icon: '🧹', label: 'Limpieza e Higiene',   color: 'rgba(10,107,255,0.18)', border: 'rgba(10,107,255,0.35)',  img: '/images/cat-limpieza.png' },
+  { icon: '📦', label: 'Papelaría y Oficina',  color: 'rgba(88,101,242,0.18)',  border: 'rgba(88,101,242,0.35)', img: '/images/cat-oficina.png' },
+  { icon: '🔩', label: 'Ferretería',           color: 'rgba(0,212,255,0.15)',   border: 'rgba(0,212,255,0.3)',    img: '/images/cat-ferreteria.png' },
+  { icon: '❄️', label: 'Refrigeración',        color: 'rgba(10,107,255,0.15)', border: 'rgba(10,107,255,0.3)',   img: '/images/cat-refrigeracion.png' },
+  { icon: '🍽️', label: 'Alimentos y Bebidas',  color: 'rgba(88,101,242,0.15)',  border: 'rgba(88,101,242,0.3)',  img: '/images/cat-alimentos.png' },
 ];
 
-export function Hero() {
-  const [currentImg, setCurrentImg] = useState(0);
+const DEFAULT_IMG = '/images/cat-default.png';
 
+// Preload all images on module load
+if (typeof window !== 'undefined') {
+  [DEFAULT_IMG, ...showcaseCategories.map(c => c.img)].forEach(src => {
+    const img = new Image(); img.src = src;
+  });
+}
+
+const showcaseBadges = [
+  '✅ Cotización empresarial',
+  '🏭 Proveedores especializados',
+  '⚡ Respuesta comercial',
+  '🤝 Abastecimiento B2B',
+];
+
+function HeroShowcase() {
+  const [clickedIdx, setClickedIdx] = useState(null);
+  const [hoveredIdx, setHoveredIdx] = useState(null);
+  const [autoIdx, setAutoIdx] = useState(-1); // -1 = default image
+  const timerRef = useRef(null);
+
+  // Auto-rotate, pauses when user interacts (hover or click)
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentImg((prev) => (prev + 1) % heroImages.length);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, []);
+    if (hoveredIdx !== null || clickedIdx !== null) return;
+    timerRef.current = setInterval(() => {
+      setAutoIdx(p => (p + 1) >= showcaseCategories.length ? -1 : p + 1);
+    }, 4500);
+    return () => clearInterval(timerRef.current);
+  }, [hoveredIdx, clickedIdx]);
+
+  const displayIdx = hoveredIdx !== null ? hoveredIdx : (clickedIdx !== null ? clickedIdx : autoIdx);
 
   return (
+    <div
+      className="hero-showcase-wrapper"
+      onMouseLeave={() => setHoveredIdx(null)}
+    >
+      <div className="hero-showcase-bg">
+        <img
+          src={DEFAULT_IMG}
+          alt=""
+          aria-hidden="true"
+          className="showcase-bg-img"
+          style={{ opacity: displayIdx === -1 ? 1 : 0 }}
+        />
+        {showcaseCategories.map((cat, i) => (
+          <img
+            key={cat.label}
+            src={cat.img}
+            alt=""
+            aria-hidden="true"
+            className="showcase-bg-img"
+            style={{ opacity: displayIdx === i ? 1 : 0 }}
+          />
+        ))}
+        <div className="showcase-overlay" />
+        <div className="showcase-vignette" />
+      </div>
+
+      <div className="hero-showcase-panel">
+        <div className="showcase-glow" />
+
+        <div className="showcase-card">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.4rem' }}>
+            <div style={{
+              width: '10px', height: '10px', borderRadius: '50%',
+              background: 'var(--grad-brand)',
+              boxShadow: '0 0 10px rgba(10,107,255,0.7)',
+            }} />
+            <span style={{ fontFamily: 'var(--font-display)', fontSize: '0.78rem', fontWeight: 700, color: 'var(--accent-cyan)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Suministro multisectorial
+            </span>
+            <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.3rem' }}>
+              {[0,1,2].map(i => (
+                <div key={i} style={{ width: '6px', height: '6px', borderRadius: '50%', opacity: 0.7,
+                  background: i === 0 ? '#ef4444' : i === 1 ? '#f59e0b' : '#22c55e' }} />
+              ))}
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '0.65rem', marginBottom: '1.4rem' }}>
+            {showcaseCategories.map((cat, i) => (
+              <div
+                key={cat.label}
+                onClick={() => setClickedIdx(clickedIdx === i ? null : i)}
+                onMouseEnter={() => setHoveredIdx(i)}
+                style={{
+                  background: displayIdx === i ? cat.color : 'rgba(255,255,255,0.04)',
+                  border: `1px solid ${displayIdx === i ? cat.border : 'rgba(255,255,255,0.08)'}`,
+                  borderRadius: '12px', padding: '0.75rem 0.5rem', textAlign: 'center',
+                  transition: 'all 0.35s ease', cursor: 'pointer',
+                  transform: displayIdx === i ? 'scale(1.06) translateY(-2px)' : 'scale(1)',
+                  boxShadow: displayIdx === i ? `0 4px 24px ${cat.border}` : 'none',
+                  userSelect: 'none',
+                }}
+              >
+                <div style={{ fontSize: '1.4rem', marginBottom: '0.3rem', lineHeight: 1 }}>{cat.icon}</div>
+                <div style={{ fontSize: '0.62rem', fontWeight: 600, lineHeight: 1.2,
+                  color: displayIdx === i ? '#e2e8f0' : 'var(--text-muted)' }}>{cat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)', marginBottom: '1.2rem' }} />
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+            {showcaseBadges.map(b => (
+              <span key={b} style={{
+                fontSize: '0.68rem', fontWeight: 600, padding: '0.3rem 0.75rem',
+                borderRadius: '100px', background: 'rgba(10,107,255,0.14)',
+                border: '1px solid rgba(10,107,255,0.28)', color: '#94a3b8',
+              }}>{b}</span>
+            ))}
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute', top: '-18px', right: '-18px',
+          background: 'linear-gradient(135deg, rgba(10,107,255,0.32), rgba(0,212,255,0.18))',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(0,212,255,0.35)', borderRadius: '14px',
+          padding: '0.65rem 0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem',
+          boxShadow: '0 4px 24px rgba(10,107,255,0.35)',
+          animation: 'float 5s ease-in-out infinite', zIndex: 3,
+        }}>
+          <span style={{ fontSize: '1.1rem' }}>📋</span>
+          <div>
+            <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#e2e8f0', lineHeight: 1 }}>Cotización</div>
+            <div style={{ fontSize: '0.6rem', color: 'var(--accent-cyan)', marginTop: '1px' }}>Solicitud B2B</div>
+          </div>
+        </div>
+
+        <div style={{
+          position: 'absolute', bottom: '-14px', left: '-14px',
+          background: 'linear-gradient(135deg, rgba(88,101,242,0.32), rgba(10,107,255,0.18))',
+          backdropFilter: 'blur(12px)',
+          border: '1px solid rgba(88,101,242,0.4)', borderRadius: '14px',
+          padding: '0.65rem 0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem',
+          boxShadow: '0 4px 24px rgba(88,101,242,0.28)',
+          animation: 'float 6s ease-in-out infinite 1s', zIndex: 3,
+        }}>
+          <span style={{ fontSize: '1.1rem' }}>🏭</span>
+          <div>
+            <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#e2e8f0', lineHeight: 1 }}>8+ Sectores</div>
+            <div style={{ fontSize: '0.6rem', color: '#a5b4fc', marginTop: '1px' }}>Multisectorial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Hero() {
+  return (
     <section style={{
-      position: 'relative',
-      minHeight: '100vh',
-      display: 'flex',
-      alignItems: 'center',
-      overflow: 'hidden',
-      background: 'linear-gradient(180deg, #050E1F 0%, #091629 100%)',
+      position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center',
+      overflow: 'hidden', background: 'linear-gradient(180deg, #050E1F 0%, #091629 100%)',
       paddingTop: '70px'
     }}>
       <ParticlesCanvas />
@@ -163,47 +305,9 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Right Column (Image Carousel) */}
+          {/* Right Column — Hero Showcase */}
           <div className="hero-carousel-col reveal">
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              aspectRatio: '1 / 1',
-              maxWidth: '500px',
-              margin: '0 auto',
-            }}>
-              {/* Glass container behind images */}
-              <div style={{
-                position: 'absolute',
-                inset: '20px',
-                background: 'rgba(255,255,255,0.03)',
-                borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.05)',
-                backdropFilter: 'blur(10px)',
-                boxShadow: '0 30px 60px rgba(0,0,0,0.5), inset 0 0 40px rgba(10,107,255,0.1)'
-              }} />
-              
-              {heroImages.map((img, i) => (
-                <img
-                  key={i}
-                  src={img.src}
-                  alt={img.alt}
-                  style={{
-                    position: 'absolute',
-                    top: '0',
-                    left: '0',
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    padding: '2rem',
-                    filter: 'drop-shadow(0 20px 30px rgba(0,0,0,0.4))',
-                    transition: 'opacity 1s ease-in-out, transform 1s ease-in-out',
-                    opacity: currentImg === i ? 1 : 0,
-                    transform: currentImg === i ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
-                  }}
-                />
-              ))}
-            </div>
+            <HeroShowcase />
           </div>
 
         </div>

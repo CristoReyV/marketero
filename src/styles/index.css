@@ -57,11 +57,13 @@
 
 /* ── Reset ───────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.grid-item, .flex-child, .why-grid > * { min-width: 0; }
 
 html {
   scroll-behavior: smooth;
   font-size: 16px;
   -webkit-text-size-adjust: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -71,6 +73,12 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
+  max-width: 100%;
+}
+
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 img { max-width: 100%; height: auto; display: block; }
@@ -84,11 +92,18 @@ input, textarea, select {
 }
 
 /* ── Container ───────────────────────────────────────────────────── */
-.container {
+.container, .section, .page, .hero, .header-inner {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+.section, .page, .hero {
+  padding: 0; /* Override container padding if they don't need it */
+  max-width: 100%;
+}
+.hero {
+  overflow-x: clip; /* Fix for absolute positioning breaking out */
 }
 
 /* ── Typography ──────────────────────────────────────────────────── */
